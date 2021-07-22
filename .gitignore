@@ -5,3 +5,4 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea
 /.vs/WebAutopark/v16/.suo
+*.user
