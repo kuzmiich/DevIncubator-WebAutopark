@@ -5,6 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="WebAutopark.Core\**" />
+      <Content Remove="WebAutopark.Core\**" />
+      <EmbeddedResource Remove="WebAutopark.Core\**" />
+      <None Remove="WebAutopark.Core\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
       <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
       <Content Remove="wwwroot\lib\bootstrap\LICENSE" />
