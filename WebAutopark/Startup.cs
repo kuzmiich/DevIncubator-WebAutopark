@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAutopark.Core.Entities;
+using WebAutopark.DataAccess.Repositories;
+using WebAutopark.DataAccess.Repositories.Base;
+using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark
 {
@@ -19,10 +18,20 @@ namespace WebAutopark
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DevelopmentDB");
+            
+            services.AddTransient<IRepository<Detail>, DetailRepository>(_ => new DetailRepository(new DbConnectionBuilder(connectionString)));
+
+            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(_ => new VehicleRepository(new DbConnectionBuilder(connectionString)));
+
+            services.AddTransient<IRepository<VehicleType>, VehicleTypeRepository>(_ => new VehicleTypeRepository(new DbConnectionBuilder(connectionString)));
+
+            services.AddHttpContextAccessor();
+
             services.AddControllersWithViews();
         }
 
@@ -36,7 +45,7 @@ namespace WebAutopark
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
                 app.UseHsts();
             }
 

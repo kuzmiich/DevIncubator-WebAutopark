@@ -8,11 +8,13 @@ namespace WebAutopark.DataAccess.Repositories.Base
 {
     public interface IRepository<T>
     {
-        T Get(int id);
-        IEnumerable<T> GetAll();
-        void Create(T obj);
-        void Update(T obj);
+        Task<T> Get(int id);
+        Task<IEnumerable<T>> GetAll();
+
+        void Create(T element);
+        void Update(T element);
+
         void Save();
-        void Delete();
+        void Delete(int id);
     }
 }

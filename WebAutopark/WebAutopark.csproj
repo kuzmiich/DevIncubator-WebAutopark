@@ -17,4 +17,18 @@
       <Content Remove="wwwroot\lib\bootstrap\LICENSE" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0-preview.6.21352.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WebAutopark.BusinessLogic\WebAutopark.BusinessLogic.csproj" />
+      <ProjectReference Include="..\WebAutopark.Core\WebAutopark.Core.csproj" />
+      <ProjectReference Include="..\WebAutopark.DataAccess\WebAutopark.DataAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\Vehicle\" />
+    </ItemGroup>
+
 </Project>

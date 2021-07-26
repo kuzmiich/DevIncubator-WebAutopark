@@ -1,64 +1,30 @@
-﻿using System;
+﻿using Dapper;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
-using static System.GC;
+using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class VehicleTypeRepository : IRepository<VehicleType>
+    public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
     {
-        private static bool _disposed = false;
-
-        public VehicleType Get(int id)
+        public VehicleTypeRepository(IDbConnectionBuilder connectionBuilder) : base(connectionBuilder, "VehicleTypes")
         {
-            throw new NotImplementedException();
         }
 
-        public IEnumerable<VehicleType> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<VehicleType> Get(int id) => await Connection.QueryFirstAsync<VehicleType>(QueryGetById, id);
 
-        public void Create(VehicleType obj)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<VehicleType>> GetAll() => await Connection.QueryAsync<VehicleType>(QueryGetAll);
 
-        public void Update(VehicleType obj)
-        {
-            throw new NotImplementedException();
-        }
+        public async void Create(VehicleType element) => await Connection.ExecuteAsync(QueryCreate, element);
+
+        public async void Update(VehicleType element) => await Connection.ExecuteAsync(QueryUpdate, element);
 
         public void Save()
         {
-            throw new NotImplementedException();
         }
 
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // _context.Dispose();
-                }
-            }
-            _disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            SuppressFinalize(this);
-        }
+        public async void Delete(int id) => await Connection.ExecuteAsync(QueryDelete, id);
     }
 }

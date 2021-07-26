@@ -6,6 +6,6 @@ namespace WebAutopark.Core.Entities
     {
         public string TypeName { get; set; }
 
-        public decimal TaxCoefficient { get; set; }
+        public double TaxCoefficient { get; set; }
     }
 }

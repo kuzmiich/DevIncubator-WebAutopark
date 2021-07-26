@@ -8,30 +8,27 @@ namespace WebAutopark.Core.Entities
 {
     public class Vehicle : Entity
     {
-        private const decimal WeightCoefficient = 0.0013m;
-        private const decimal ShiftForTax = 5m;
-        private const decimal TaxCoefficient = 30m;
+        private const double WeightCoefficient = 0.0013;
+        private const double ShiftForTax = 5;
+        private const double TaxCoefficient = 30;
         
         #region Vehicle Property
         
         public VehicleType VehicleType { get; set; }
         public string ModelName { get; set; }
-        public string RegistrationNumber { get; set; }
-        public int ReleaseYear { get; set; }
+        public DateTime RegistrationDate { get; set; }
+        public int ManufactureYear { get; set; }
         public int Weight { get; set; }
         public int Mileage { get; set; }
         public Color Color { get; set; }
         public double TankCapacity { get; set; }
-        public decimal EngineConsumption { get; set; }
-        public decimal EnergyTankCapacity { get; set; }
+        public double EngineConsumption { get; set; }
+        public double EnergyTankCapacity { get; set; }
 
-        public decimal GetCalcTaxPerMonth => (Weight * WeightCoefficient) + (VehicleType.TaxCoefficient * TaxCoefficient) + ShiftForTax;
+        public double GetCalcTaxPerMonth => (Weight * WeightCoefficient) + (VehicleType.TaxCoefficient * TaxCoefficient) + ShiftForTax;
         
-        public decimal KmPerFullTank => EnergyTankCapacity / EngineConsumption;
+        public double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
 
         #endregion
-
-        public override bool Equals(object obj) =>
-            obj is Vehicle vehicle && (VehicleType == vehicle.VehicleType && ModelName == vehicle.ModelName);
     }
 }
