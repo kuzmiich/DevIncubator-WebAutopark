@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DevIncubator.WebAutopark\**" />
+    <EmbeddedResource Remove="DevIncubator.WebAutopark\**" />
+    <None Remove="DevIncubator.WebAutopark\**" />
+  </ItemGroup>
+
+</Project>

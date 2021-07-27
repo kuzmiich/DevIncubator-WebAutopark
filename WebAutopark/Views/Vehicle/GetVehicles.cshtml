@@ -1,0 +1,84 @@
+﻿@model IEnumerable<WebAutopark.Core.Entities.Vehicle>
+
+@{ ViewData["Title"] = "ViewVehicles"; }
+
+<hr />
+<h4 class="text-center my-1">Vehicles list</h4>
+<hr />
+<table class="table table-striped table-borderless table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                VehicleType
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Registration date
+            </th>
+            <th>
+                Weight
+            </th>
+            <th>
+                Manufacture Year
+            </th>
+            <th>
+                Mileage
+            </th>
+            <th>
+                Fuel tank
+            </th>
+            <th>
+                Color
+            </th>
+            <th>
+                Consumption
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.TypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufactureYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mileage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KmPerFullTank)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineConsumption)
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" asp-action="Create">Add vehicle</a>
+</div>
