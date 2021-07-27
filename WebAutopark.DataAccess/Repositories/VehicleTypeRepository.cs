@@ -17,14 +17,10 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task<IEnumerable<VehicleType>> GetAll() => await Connection.QueryAsync<VehicleType>(QueryGetAll);
 
-        public async void Create(VehicleType element) => await Connection.ExecuteAsync(QueryCreate, element);
+        public async Task Create(VehicleType element) => await Connection.ExecuteAsync(QueryCreate, element);
 
-        public async void Update(VehicleType element) => await Connection.ExecuteAsync(QueryUpdate, element);
+        public async Task Update(VehicleType element) => await Connection.ExecuteAsync(QueryUpdate, element);
 
-        public void Save()
-        {
-        }
-
-        public async void Delete(int id) => await Connection.ExecuteAsync(QueryDelete, id);
+        public async Task Delete(int id) => await Connection.ExecuteAsync(QueryDelete, id);
     }
 }

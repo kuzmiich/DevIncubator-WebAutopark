@@ -13,7 +13,8 @@ namespace WebAutopark.Core.Entities
         private const double TaxCoefficient = 30;
         
         #region Vehicle Property
-        
+
+        public int VehicleId { get; set; }
         public VehicleType VehicleType { get; set; }
         public string ModelName { get; set; }
         public DateTime RegistrationDate { get; set; }
@@ -25,9 +26,9 @@ namespace WebAutopark.Core.Entities
         public double EngineConsumption { get; set; }
         public double EnergyTankCapacity { get; set; }
 
-        public double GetCalcTaxPerMonth => (Weight * WeightCoefficient) + (VehicleType.TaxCoefficient * TaxCoefficient) + ShiftForTax;
+        public virtual double GetCalcTaxPerMonth => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
         
-        public double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
+        public virtual double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
 
         #endregion
     }

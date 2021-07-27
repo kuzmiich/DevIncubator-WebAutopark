@@ -17,9 +17,6 @@ namespace WebAutopark.DataAccess.Repositories.Specification
             _connectionString = connectionString;
         }
 
-        public DbConnection GetConnection()
-        {
-            return new SqlConnection(_connectionString);
-        }
+        public DbConnection GetConnection() => new SqlConnection(_connectionString);
     }
 }
