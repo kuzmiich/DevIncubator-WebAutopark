@@ -25,5 +25,10 @@ namespace WebAutopark.Controllers
             return View(vehicleList);
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(Vehicle vehicle)
+        {
+            return null;
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace WebAutopark.DataAccess.Repositories
     {
         public DetailRepository(IDbConnectionBuilder connectionBuilder) : base(connectionBuilder, "Details")
         {
-
         }
 
         public async Task<Detail> Get(int id) => await Connection.QueryFirstAsync<Detail>(QueryGetById, id);
