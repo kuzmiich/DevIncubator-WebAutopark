@@ -7,6 +7,7 @@ using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.DataAccess.Repositories.Base;
 using WebAutopark.DataAccess.Repositories.Specification;
+using WebAutopark.Extensions;
 
 namespace WebAutopark
 {
@@ -23,12 +24,12 @@ namespace WebAutopark
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
-            
-            services.AddTransient<IRepository<Detail>, DetailRepository>(_ => new DetailRepository(new DbConnectionBuilder(connectionString)));
 
-            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(_ => new VehicleRepository(new DbConnectionBuilder(connectionString)));
+            services.AddDetailService(connectionString);
 
-            services.AddTransient<IRepository<VehicleType>, VehicleTypeRepository>(_ => new VehicleTypeRepository(new DbConnectionBuilder(connectionString)));
+            services.AddVehicleService(connectionString);
+
+            services.AddVehicleTypeService(connectionString);
 
             services.AddHttpContextAccessor();
 
@@ -53,9 +54,7 @@ namespace WebAutopark
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
