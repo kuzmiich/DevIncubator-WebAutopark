@@ -23,12 +23,13 @@ namespace WebAutopark
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
+            var connectionBuilder = new DbConnectionBuilder(connectionString);
             
-            services.AddTransient<IRepository<Detail>, DetailRepository>(_ => new DetailRepository(new DbConnectionBuilder(connectionString)));
+            services.AddScoped<IRepository<Detail>, DetailRepository>(_ => new DetailRepository(connectionBuilder));
 
-            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(_ => new VehicleRepository(new DbConnectionBuilder(connectionString)));
+            services.AddScoped<IRepository<Vehicle>, VehicleRepository>(_ => new VehicleRepository(connectionBuilder));
 
-            services.AddTransient<IRepository<VehicleType>, VehicleTypeRepository>(_ => new VehicleTypeRepository(new DbConnectionBuilder(connectionString)));
+            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>(_ => new VehicleTypeRepository(connectionBuilder));
 
             services.AddHttpContextAccessor();
 
