@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 
@@ -12,11 +13,12 @@ namespace WebAutopark.DataAccess.Repositories.Specification
         protected readonly string QueryUpdate;
         protected readonly string QueryDelete;
 
-        protected readonly DbConnection Connection;
+        protected readonly DbConnection DbConnection;
 
-        protected ConnectionRepository(IDbConnectionBuilder connectionBuilder, string dbName)
+        protected ConnectionRepository(DbConnection dbConnection, string dbName)
         {
-            Connection = connectionBuilder.GetConnection();
+            DbConnection = dbConnection;
+
             QueryGetAll =  $"SELECT * FROM {dbName}";
             QueryGetById = $"SELECT * FROM {dbName} WHERE {dbName.Remove(dbName.Length - 1)}Id = @Id";
             QueryCreate =  $"INSERT INTO {dbName} (Name) VALUES(@Name)";
@@ -24,8 +26,8 @@ namespace WebAutopark.DataAccess.Repositories.Specification
             QueryDelete =  $"DELETE FROM {dbName} WHERE {dbName.Remove(dbName.Length - 1)}Id = @Id";
         }
 
-        public void Dispose() => Connection.Dispose();
+        public void Dispose() => DbConnection.Dispose();
 
-        public ValueTask DisposeAsync() => Connection.DisposeAsync();
+        public ValueTask DisposeAsync() => DbConnection.DisposeAsync();
     }
 }

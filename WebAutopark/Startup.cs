@@ -1,5 +1,8 @@
+using System.Data;
+using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,13 +26,14 @@ namespace WebAutopark
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
-            var connectionBuilder = new DbConnectionBuilder(connectionString);
-            
-            services.AddScoped<IRepository<Detail>, DetailRepository>(_ => new DetailRepository(connectionBuilder));
 
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>(_ => new VehicleRepository(connectionBuilder));
+            services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
 
-            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>(_ => new VehicleTypeRepository(connectionBuilder));
+            services.AddScoped<IRepository<Detail>, DetailRepository>();
+
+            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+
+            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
 
             services.AddHttpContextAccessor();
 
