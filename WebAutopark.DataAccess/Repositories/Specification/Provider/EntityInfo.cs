@@ -8,7 +8,7 @@ namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 {
     public class EntityInfo
     {
-        private EntityInfo(string tableName)
+        internal EntityInfo(string tableName)
         {
             TableName = tableName;
             KeyName = tableName.Remove(tableName.Length - 1);
@@ -16,7 +16,5 @@ namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 
         public string TableName { get; }
         public string KeyName { get; }
-
-        internal static EntityInfo GetInstance(string tableName) => new(tableName);
     }
 }
