@@ -10,7 +10,7 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
     {
-        public VehicleTypeRepository(DbConnection dbConnection) : base(dbConnection, "VehicleTypes")
+        public VehicleTypeRepository(DbConnection dbConnection) : base(dbConnection, new VehicleType())
         {
         }
 

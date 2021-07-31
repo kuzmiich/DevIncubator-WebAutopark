@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.DataAccess.Repositories.Base;
+using WebAutopark.DataAccess.Repositories.Specification.Provider;
 
 namespace WebAutopark
 {
@@ -19,7 +20,7 @@ namespace WebAutopark
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -28,6 +29,8 @@ namespace WebAutopark
 
             services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
 
+            services.AddTransient<IDbProvider>(_ => new DbProvider());
+            
             services.AddScoped<IRepository<Detail>, DetailRepository>();
 
             services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
@@ -37,10 +40,12 @@ namespace WebAutopark
             services.AddHttpContextAccessor();
 
             services.AddControllersWithViews();
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

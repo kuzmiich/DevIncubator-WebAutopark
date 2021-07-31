@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using WebAutopark.Core.Entities.Base;
 
 namespace WebAutopark.Core.Entities
 {
-    public class Vehicle
+    public class Vehicle : Entity
     {
         private const double WeightCoefficient = 0.0013;
         private const double ShiftForTax = 5;
@@ -30,6 +31,8 @@ namespace WebAutopark.Core.Entities
         public virtual double GetCalcTaxPerMonth => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
         
         public virtual double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
+        
+        public override string EntityName => "Detail";
 
         #endregion
     }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WebAutopark.Core.Entities.Base;
 
 namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 {
-    internal interface IDbProvider
+    public interface IDbProvider
     {
-        DbEntity GetDbEntity(string dbName);
+        EntityInfo GetDbEntity<T>(T entity);
     }
 }
