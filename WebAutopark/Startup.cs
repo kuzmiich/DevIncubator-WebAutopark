@@ -31,13 +31,7 @@ namespace WebAutopark
 
             services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
 
-            services.AddScoped<IDbProvider<Type>, DbProvider<Type>>();
-            
-            services.AddScoped<IRepository<Detail>, DetailRepository>();
-
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
-
-            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
+            services.AddEntityRepositories();
 
             services.AddHttpContextAccessor();
 
