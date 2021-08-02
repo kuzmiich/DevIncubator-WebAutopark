@@ -20,11 +20,11 @@ namespace WebAutopark.DataAccess.Repositories.Specification
         
         protected readonly DbConnection DbConnection;
 
-        private static IDbProvider<Type> _dbProvider;
+        private static readonly IDbProvider _dbProvider = new DbProvider();
 
         private ConnectionRepository()
         {
-            var entityInfo = _dbProvider.GetDbEntity(typeof(T));
+            var entityInfo = _dbProvider.GetDbEntity<T>();
             QueryGetAll = $"SELECT * FROM {entityInfo.TableName}";
             QueryGetById = $"SELECT * FROM {entityInfo.TableName} WHERE {entityInfo.KeyName}Id = @Id";
             QueryCreate = $"INSERT INTO {entityInfo.TableName} (Name) VALUES(@Name)";
