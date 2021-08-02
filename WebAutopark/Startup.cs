@@ -1,12 +1,16 @@
+using System;
+using System.Data;
+using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.DataAccess.Repositories.Base;
-using WebAutopark.DataAccess.Repositories.Specification;
+using WebAutopark.DataAccess.Repositories.Specification.Provider;
 using WebAutopark.Extensions;
 
 namespace WebAutopark
@@ -18,26 +22,32 @@ namespace WebAutopark
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
 
-            services.AddDetailService(connectionString);
+            services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
 
-            services.AddVehicleService(connectionString);
+            services.AddScoped<IDbProvider<Type>, DbProvider<Type>>();
+            
+            services.AddScoped<IRepository<Detail>, DetailRepository>();
 
-            services.AddVehicleTypeService(connectionString);
+            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+
+            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
 
             services.AddHttpContextAccessor();
 
             services.AddControllersWithViews();
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

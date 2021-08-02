@@ -1,31 +1,43 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Threading.Tasks;
+using WebAutopark.DataAccess.Repositories.Specification.Provider;
 
 namespace WebAutopark.DataAccess.Repositories.Specification
 {
-    public abstract class ConnectionRepository : IDisposable, IAsyncDisposable
+    public abstract class ConnectionRepository<T> : IDisposable, IAsyncDisposable
     {
+        #region Query
+
         protected readonly string QueryGetAll;
         protected readonly string QueryGetById;
         protected readonly string QueryCreate;
         protected readonly string QueryUpdate;
         protected readonly string QueryDelete;
 
-        protected readonly DbConnection Connection;
+        #endregion
+        
+        protected readonly DbConnection DbConnection;
 
-        protected ConnectionRepository(IDbConnectionBuilder connectionBuilder, string dbName)
+        private static IDbProvider<Type> _dbProvider;
+
+        private ConnectionRepository()
         {
-            Connection = connectionBuilder.GetConnection();
-            QueryGetAll = $"SELECT * FROM {dbName}";
-            QueryGetById = $"SELECT * FROM {dbName} WHERE {dbName.Remove(dbName.Length - 1)}Id = @Id";
-            QueryCreate = $"INSERT INTO {dbName} (Name) VALUES(@Name)";
-            QueryUpdate = $"UPDATE {dbName} SET Name = @Name WHERE {dbName.Remove(dbName.Length - 1)}Id = @Id";
-            QueryDelete = $"DELETE FROM {dbName} WHERE {dbName.Remove(dbName.Length - 1)}Id = @Id";
+            var entityInfo = _dbProvider.GetDbEntity(typeof(T));
+            QueryGetAll = $"SELECT * FROM {entityInfo.TableName}";
+            QueryGetById = $"SELECT * FROM {entityInfo.TableName} WHERE {entityInfo.KeyName}Id = @Id";
+            QueryCreate = $"INSERT INTO {entityInfo.TableName} (Name) VALUES(@Name)";
+            QueryUpdate = $"UPDATE {entityInfo.TableName} SET Name = @Name WHERE {entityInfo.KeyName}Id = @Id";
+            QueryDelete = $"DELETE FROM {entityInfo.TableName} WHERE {entityInfo.KeyName}Id = @Id";
         }
+        
+        protected ConnectionRepository(DbConnection dbConnection) : this()
+        {
+            DbConnection = dbConnection;
+        }
+        public void Dispose() => DbConnection.Dispose();
 
-        public void Dispose() => Connection.Dispose();
-
-        public ValueTask DisposeAsync() => Connection.DisposeAsync();
+        public ValueTask DisposeAsync() => DbConnection.DisposeAsync();
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebAutopark.DataAccess.Repositories.Base
@@ -11,10 +8,9 @@ namespace WebAutopark.DataAccess.Repositories.Base
         Task<T> Get(int id);
         Task<IEnumerable<T>> GetAll();
 
-        void Create(T element);
-        void Update(T element);
-
-        void Save();
-        void Delete(int id);
+        Task Create(T element);
+        Task Update(T element);
+        
+        Task Delete(int id);
     }
 }

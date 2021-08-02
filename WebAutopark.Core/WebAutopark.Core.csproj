@@ -9,6 +9,9 @@
     <Compile Remove="DevIncubator.WebAutopark\**" />
     <EmbeddedResource Remove="DevIncubator.WebAutopark\**" />
     <None Remove="DevIncubator.WebAutopark\**" />
+    <Compile Remove="Extension\**" />
+    <EmbeddedResource Remove="Extension\**" />
+    <None Remove="Extension\**" />
   </ItemGroup>
 
 </Project>
