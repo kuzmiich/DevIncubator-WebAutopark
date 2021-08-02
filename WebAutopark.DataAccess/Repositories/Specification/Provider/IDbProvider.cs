@@ -2,8 +2,8 @@
 
 namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 {
-    public interface IDbProvider<in T>
+    public interface IDbProvider
     {
-        EntityInfo GetDbEntity(T type);
+        EntityInfo GetDbEntity<T>();
     }
 }
