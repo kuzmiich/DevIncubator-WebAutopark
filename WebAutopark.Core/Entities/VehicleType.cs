@@ -1,13 +1,9 @@
-﻿using WebAutopark.Core.Entities.Base;
-
-namespace WebAutopark.Core.Entities
+﻿namespace WebAutopark.Core.Entities
 {
-    public class VehicleType : Entity
+    public class VehicleType
     {
         public int VehicleTypeId { get; set; }
         public string TypeName { get; set; }
         public double TaxCoefficient { get; set; }
-        
-        public override string EntityName => "Detail";
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +30,7 @@ namespace WebAutopark
 
             services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
 
-            services.AddTransient<IDbProvider>(_ => new DbProvider());
+            services.AddScoped<IDbProvider<Type>, DbProvider<Type>>();
             
             services.AddScoped<IRepository<Detail>, DetailRepository>();
 

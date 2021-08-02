@@ -1,9 +1,9 @@
-﻿using WebAutopark.Core.Entities.Base;
+﻿using System;
 
 namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 {
-    public interface IDbProvider
+    public interface IDbProvider<in T>
     {
-        EntityInfo GetDbEntity(Entity entity);
+        EntityInfo GetDbEntity(T type);
     }
 }

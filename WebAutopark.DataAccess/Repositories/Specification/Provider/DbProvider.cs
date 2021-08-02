@@ -1,12 +1,11 @@
-﻿using WebAutopark.Core.Entities;
-using WebAutopark.Core.Entities.Base;
+﻿using System;
 
 namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 {
-    public class DbProvider : IDbProvider
+    public class DbProvider<T> : IDbProvider<T> where T : Type
     {
-        public EntityInfo GetDbEntity(Entity entity) =>
-            entity.EntityName switch
+        public EntityInfo GetDbEntity(T type) =>
+            type.Name switch
             {
                 "Detail" => new EntityInfo("Detail"),
                 "Vehicle" => new EntityInfo("Vehicle"),

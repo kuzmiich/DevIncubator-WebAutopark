@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
-using WebAutopark.Core.Entities.Base;
 using WebAutopark.DataAccess.Repositories.Base;
 using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class DetailRepository : ConnectionRepository, IRepository<Detail>
+    public class DetailRepository : ConnectionRepository<Detail>, IRepository<Detail>
     {
-        public DetailRepository(DbConnection dbConnection) : base(dbConnection, new Detail())
+        public DetailRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
         public async Task<Detail> Get(int id) => await DbConnection.QueryFirstAsync<Detail>(QueryGetById, id);
