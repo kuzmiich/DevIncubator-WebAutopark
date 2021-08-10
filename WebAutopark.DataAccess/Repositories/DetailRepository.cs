@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace WebAutopark.DataAccess.Repositories
         public DetailRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
-
+        
         public async Task<Detail> Get(int id) => await DbConnection.QueryFirstAsync<Detail>(QueryGetById, id);
 
         public async Task<IEnumerable<Detail>> GetAll() => await DbConnection.QueryAsync<Detail>(QueryGetAll);
@@ -34,7 +34,5 @@ namespace WebAutopark.DataAccess.Repositories
         public async Task Update(Detail element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, id);
-
-        
     }
 }

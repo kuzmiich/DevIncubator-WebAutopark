@@ -1,4 +1,9 @@
-﻿using WebAutopark.Core.Enums;
+using WebAutopark.Core.Enums;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using WebAutopark.Core.Enums;
+
 
 namespace WebAutopark.Core.Entities
 {
@@ -24,9 +29,11 @@ namespace WebAutopark.Core.Entities
         public double EnergyTankCapacity { get; set; }
 
         #endregion
-
+          
         public virtual double GetCalcTaxPerMonth() => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
         
         public virtual double KmPerFullTank() => EnergyTankCapacity / EngineConsumption;
+
+        #endregion
     }
 }

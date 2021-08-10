@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -42,7 +42,6 @@ namespace WebAutopark.DataAccess.Repositories
                                            + "WHERE VehicleId = @VehicleId";
 
         private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
-
 
         public VehicleRepository(DbConnection dbConnection) : base(dbConnection)
         {
