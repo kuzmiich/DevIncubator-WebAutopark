@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using WebAutopark.Core.Enums;
+﻿using WebAutopark.Core.Enums;
 
 namespace WebAutopark.Core.Entities
 {

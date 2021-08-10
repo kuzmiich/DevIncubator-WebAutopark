@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Data.Common;
-using WebAutopark.DataAccess.Repositories.Specification.Provider;
 using WebAutopark.Extensions;
 
 namespace WebAutopark
@@ -25,9 +24,7 @@ namespace WebAutopark
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
 
             services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
-
-            services.AddScoped<IDbProvider, DbProvider>();
-
+            
             services.AddEntityRepositories();
 
             services.AddHttpContextAccessor();
