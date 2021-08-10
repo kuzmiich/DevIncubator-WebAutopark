@@ -66,13 +66,16 @@
                     @Html.DisplayFor(modelItem => item.Mileage)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KmPerFullTank)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Color)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EngineConsumption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KmPerFullTank())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth())
                 </td>
                 
             </tr>

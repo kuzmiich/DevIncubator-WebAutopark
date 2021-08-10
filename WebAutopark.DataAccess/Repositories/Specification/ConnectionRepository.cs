@@ -1,8 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Data.Common;
 using System.Threading.Tasks;
 using WebAutopark.DataAccess.Repositories.Specification.Provider;
+using WebAutopark.DataAccess.Repositories.Specification.Provider.Extensions;
 
 namespace WebAutopark.DataAccess.Repositories.Specification
 {
@@ -21,14 +21,20 @@ namespace WebAutopark.DataAccess.Repositories.Specification
         protected readonly DbConnection DbConnection;
 
         private static readonly IDbProvider _dbProvider = new DbProvider();
-
+        
         private ConnectionRepository()
         {
             var entityInfo = _dbProvider.GetDbEntity<T>();
-            QueryGetAll = $"SELECT * FROM {entityInfo.TableName}";
-            QueryGetById = $"SELECT * FROM {entityInfo.TableName} WHERE {entityInfo.KeyName}Id = @Id";
-            QueryCreate = $"INSERT INTO {entityInfo.TableName} (Name) VALUES(@Name)";
-            QueryUpdate = $"UPDATE {entityInfo.TableName} SET Name = @Name WHERE {entityInfo.KeyName}Id = @Id";
+            QueryGetAll = $"SELECT * From {entityInfo.TableName} {entityInfo.CustomTypeProperties}";
+
+            QueryGetById = $"SELECT * From {entityInfo.TableName} {entityInfo.CustomTypeProperties} WHERE {entityInfo.KeyName}Id = @Id";
+
+            QueryCreate = $"INSERT INTO {entityInfo.TableName} ({entityInfo.EntityPropertyInfos.EnumerableJoin(',').TrimEnd(',')}) " +
+                          $"VALUES({entityInfo.EntityPropertyInfos.EnumerableJoin('@', ',').TrimEnd(',')})";
+
+            QueryUpdate = $"UPDATE {entityInfo.TableName} SET {entityInfo.EntityPropertyInfos.EnumerableJoin().TrimEnd(',')} WHERE Id = @Id";
+
+
             QueryDelete = $"DELETE FROM {entityInfo.TableName} WHERE {entityInfo.KeyName}Id = @Id";
         }
         

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using WebAutopark.DataAccess.Repositories.Specification.Provider.DbEntity;
 
 namespace WebAutopark.DataAccess.Repositories.Specification.Provider
 {
