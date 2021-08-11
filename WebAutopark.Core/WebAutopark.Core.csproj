@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -13,5 +13,5 @@
     <EmbeddedResource Remove="Extension\**" />
     <None Remove="Extension\**" />
   </ItemGroup>
-
+   
 </Project>
