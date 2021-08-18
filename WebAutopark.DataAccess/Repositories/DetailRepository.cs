@@ -7,19 +7,8 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class DetailRepository : ConnectionRepository, IRepository<Detail>
+    public class DetailRepository : ConnectionRepository<Detail>, IRepository<Detail>
     {
-
-        private const string QueryGetAll =  "SELECT * FROM Details";
-
-        private const string QueryGetById = "SELECT * FROM Details WHERE DetailId = @id";
-
-        private const string QueryCreate =  "INSERT INTO Details (Name) VALUES(@Name)";
-
-        private const string QueryUpdate =  "UPDATE Details SET Name = @Name WHERE DetailId = @DetailId";
-
-        private const string QueryDelete =  "DELETE FROM Details WHERE DetailId = @id";
-
         public DetailRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
