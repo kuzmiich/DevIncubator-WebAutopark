@@ -9,6 +9,37 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class VehicleRepository : ConnectionRepository<Vehicle>, IRepository<Vehicle>
     {
+        private const string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoeff "
+                                           + "FROM Vehicles AS V "
+                                           + "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId";
+
+        private const string QueryGetById = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoeff "
+                                            + "FROM Vehicles AS V "
+                                            + "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId "
+                                            + "WHERE V.VehicleId = @id";
+
+        private const string QueryCreate = "INSERT INTO Vehicles ("
+                                           + "VehicleTypeId, ModelName, RegistrationNumber, Weight, ManufactureYear, "
+                                           + "Mileage, Color, EngineType, EngineCapacity, EngineConsumption, EnergyTankCapacity) "
+                                           + "VALUES("
+                                           + "@VehicleTypeId, @ModelName, @RegistrationNumber, @Weight, @ManufactureYear, "
+                                           + "@Mileage, @Color, @EngineType, @EngineCapacity, @EngineConsumption, @EnergyTankCapacity)";
+
+
+        private const string QueryUpdate = "UPDATE Vehicles SET "
+                                           + "VehicleTypeId = @VehicleTypeId, "
+                                           + "ModelName = @ModelName, "
+                                           + "RegistrationNumber = @RegistrationNumber, "
+                                           + "Weight = @Weight, "
+                                           + "ManufactureYear = @ManufactureYear, "
+                                           + "Mileage = @Mileage, "
+                                           + "Color = @Color, "
+                                           + "EngineType = @EngineType, "
+                                           + "EngineCapacity = @EngineCapacity, "
+                                           + "EngineConsumption = @EngineConsumption, "
+                                           + "EnergyTankCapacity = @EnergyTankCapacity "
+                                           + "WHERE VehicleId = @VehicleId";
+
         public VehicleRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }

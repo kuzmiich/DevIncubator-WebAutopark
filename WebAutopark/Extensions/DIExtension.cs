@@ -9,8 +9,6 @@ namespace WebAutopark.Extensions
     {
         public static void AddEntityRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IDbProvider<Type>, DbProvider<Type>>();
-
             services.AddScoped<IRepository<Detail>, DetailRepository>();
 
             services.AddScoped<IRepository<Vehicle>, VehicleRepository>();

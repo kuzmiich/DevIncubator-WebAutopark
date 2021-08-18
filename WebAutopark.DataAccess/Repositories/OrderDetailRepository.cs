@@ -10,6 +10,20 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class OrderDetailRepository : ConnectionRepository<OrderDetail>, IRepository<OrderDetail>
     {
+        private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
+                                           + "FROM OrderDetails JOIN Details "
+                                           + "ON OrderDetails.DetailId = Details.DetailId";
+
+        private const string QueryGetById = "SELECT * FROM OrderDetails WHERE OrderDetailId = @id";
+
+        private const string QueryCreate = "INSERT INTO OrderDetails (OrderId, DetailId, DetailAmount) "
+                                           + "VALUES (@OrderId, @DetailId, @DetailAmount)";
+
+        private const string QueryUpdate = "UPDATE OrderDetails SET OrderId = @OrderId, DetailId = @DetailId, DetailAmount = @DetailAmount "
+                                           + "WHERE OrderDetailId = @id";
+
+        private const string QueryDelete = "DELETE FROM OrderDetails WHERE OrdeDetailId = @id";
+
         public OrderDetailRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
