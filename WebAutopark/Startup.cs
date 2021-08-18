@@ -1,10 +1,16 @@
+using System;
+using System.Data;
+using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Data.Common;
+using WebAutopark.Core.Entities;
+using WebAutopark.DataAccess.Repositories;
+using WebAutopark.DataAccess.Repositories.Base;
+using WebAutopark.DataAccess.Repositories.Specification.Provider;
 using WebAutopark.Extensions;
 
 namespace WebAutopark
@@ -24,7 +30,7 @@ namespace WebAutopark
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
 
             services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
-          
+
             services.AddEntityRepositories();
 
             services.AddHttpContextAccessor();

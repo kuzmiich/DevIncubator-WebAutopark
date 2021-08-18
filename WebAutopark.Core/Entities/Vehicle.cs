@@ -27,10 +27,10 @@ namespace WebAutopark.Core.Entities
         public double EngineConsumption { get; set; }
         public double EnergyTankCapacity { get; set; }
 
-        #endregion
-          
-        public virtual double GetCalcTaxPerMonth() => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
+        public virtual double GetCalcTaxPerMonth => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
         
-        public virtual double KmPerFullTank() => EnergyTankCapacity / EngineConsumption;
+        public virtual double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
+
+        #endregion
     }
 }
