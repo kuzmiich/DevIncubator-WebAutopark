@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
+using System.Collections.Generic;
 
 namespace WebAutopark.Controllers
 {
@@ -17,18 +16,33 @@ namespace WebAutopark.Controllers
             _vehicleRepository = vehicleRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetVehicles()
+        public async Task<IActionResult> Index()
         {
-            var vehicleList = await _vehicleRepository.GetAll();
+            var details = (await _vehicleRepository.GetAll()).OrderBy(detail => detail.VehicleId);
 
-            return View(vehicleList);
+            return View(details);
+        }
 
+        [HttpGet]
+        [ActionName("Get")]
+        public async Task<IActionResult> Get(int id)
+        {
+            throw new System.NotImplementedException();
         }
         [HttpPost]
         public async Task<IActionResult> Create(Vehicle vehicle)
         {
-            return null;
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IActionResult> Delete()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IActionResult> Update()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

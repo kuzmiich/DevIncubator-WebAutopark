@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
-using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark.DataAccess.Repositories
 {
@@ -58,6 +57,6 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task Update(OrderDetail element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
-        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, id);
+        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }
 }

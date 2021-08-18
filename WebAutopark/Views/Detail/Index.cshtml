@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WebAutopark.Core.Entities.Detail>
+
+@{
+    ViewData["Title"] = "DetailList";
+}
+<h1>Detail page</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) 
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("View", "Get", new { id=item.DetailId }) |
+                @Html.ActionLink("Edit", "Update", new { id=item.DetailId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DetailId })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="text-center mt-3">
+    <a class="btn btn-primary" asp-action="Create">Create new</a>
+</div>
