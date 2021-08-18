@@ -30,12 +30,6 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Pages\Vehicle\GetVehicleById.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Pages\Vehicle\GetVehicles.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\VehicleType\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\VehicleType\Index.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Pages" />
     </ItemGroup>
 
 </Project>
