@@ -1,8 +1,6 @@
 using System;
 using System.Data.Common;
 using System.Threading.Tasks;
-using WebAutopark.DataAccess.Repositories.Specification.Provider;
-using WebAutopark.DataAccess.Repositories.Specification.Provider.Extensions;
 
 namespace WebAutopark.DataAccess.Repositories.Base
 {
