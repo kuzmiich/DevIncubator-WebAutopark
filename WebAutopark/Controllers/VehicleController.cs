@@ -20,7 +20,7 @@ namespace WebAutopark.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> GetAll()
         {
-            var details = (await _vehicleRepository.GetAll()).OrderBy(detail => detail.VehicleId);
+            var details = await _vehicleRepository.GetAll();
 
             return View(details);
         }

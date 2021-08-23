@@ -9,7 +9,8 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
     {
-        private const string QueryGetAll = "SELECT * FROM VehicleTypes";
+        private const string QueryGetAll = "SELECT * FROM VehicleTypes " +
+                                           "ORDER BY VehicleTypeId";
 
         private const string QueryGetById = "SELECT * FROM VehicleTypes WHERE VehicleTypeId = @id";
 

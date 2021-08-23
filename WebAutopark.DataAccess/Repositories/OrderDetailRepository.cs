@@ -12,7 +12,8 @@ namespace WebAutopark.DataAccess.Repositories
     {
         private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
                                            + "FROM OrderDetails JOIN Details "
-                                           + "ON OrderDetails.DetailId = Details.DetailId";
+                                           + "ON OrderDetails.DetailId = Details.DetailId "
+                                           + "ORDER BY OrderDetailId";
 
         private const string QueryGetById = "SELECT * FROM OrderDetails WHERE OrderDetailId = @id";
 

@@ -19,8 +19,7 @@ namespace WebAutopark.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> GetAll()
         {
-            var details = (await _detailRepository.GetAll()).OrderBy(detail 
-                => detail.VehicleTypeId);
+            var details = await _detailRepository.GetAll();
 
             return View(details);
         }
@@ -31,7 +30,7 @@ namespace WebAutopark.Controllers
             var getModel = await _detailRepository.Get(id);
 
             if (getModel is null)
-                return NoContent();
+                return NotFound();
             
             return View(getModel);
         }
@@ -62,7 +61,7 @@ namespace WebAutopark.Controllers
             var updateModel = await _detailRepository.Get(id);
             
             if (updateModel is null)
-                return NoContent();
+                return NotFound();
             
             return View(updateModel);
         }
@@ -86,7 +85,7 @@ namespace WebAutopark.Controllers
             var deleteModel = await _detailRepository.Get(id);
             
             if (deleteModel is null)
-                return NoContent();
+                return NotFound();
             
             return View(deleteModel);
         }
