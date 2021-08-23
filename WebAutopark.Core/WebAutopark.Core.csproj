@@ -13,5 +13,5 @@
     <EmbeddedResource Remove="Extension\**" />
     <None Remove="Extension\**" />
   </ItemGroup>
-
+   
 </Project>

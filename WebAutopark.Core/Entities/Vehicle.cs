@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using WebAutopark.Core.Enums;
 
-
 namespace WebAutopark.Core.Entities
 {
     public class Vehicle

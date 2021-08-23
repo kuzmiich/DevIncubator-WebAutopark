@@ -8,7 +8,7 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class OrderRepository : ConnectionRepository<Order>, IRepository<Order>
+    public class OrderRepository : ConnectionRepository, IRepository<Order>
     {
         private const string QueryGetAll = "SELECT Orders.*,Vehicles.ModelName,Vehicles.RegistrationNumber,OrderDetails.DetailAmount,Details.Name" +
                                            "FROM Orders" +
@@ -35,6 +35,7 @@ namespace WebAutopark.DataAccess.Repositories
 
         private const string QueryDelete = "DELETE FROM Orders WHERE OrderId = @id";
 
+
         public OrderRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
@@ -42,7 +43,7 @@ namespace WebAutopark.DataAccess.Repositories
         public async Task<Order> Get(int id)
         {
             var collection = await DbConnection.QueryAsync<Order, Vehicle, OrderDetail, Detail, Order>
-            (QueryGetAll, (order, vehicle, orderDetail, detail) =>
+            (QueryGetById, (order, vehicle, orderDetail, detail) =>
                 {
                     order.Vehicle = vehicle;
                     orderDetail.Detail = detail;

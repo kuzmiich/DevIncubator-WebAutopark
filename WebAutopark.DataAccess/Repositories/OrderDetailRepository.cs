@@ -8,7 +8,7 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class OrderDetailRepository : ConnectionRepository<OrderDetail>, IRepository<OrderDetail>
+    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetail>
     {
         private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
                                            + "FROM OrderDetails JOIN Details "
