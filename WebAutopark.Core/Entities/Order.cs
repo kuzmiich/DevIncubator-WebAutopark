@@ -9,5 +9,7 @@ namespace WebAutopark.Core.Entities
         public int VehicleId { get; set; }
 
         public Vehicle Vehicle { get; set; }
+
+        public IEnumerable<OrderDetail> OrderDetails { get; set; }
     }
 }

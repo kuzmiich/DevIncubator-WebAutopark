@@ -14,6 +14,10 @@ namespace WebAutopark.Extensions
             services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
 
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
+
+            services.AddScoped<IRepository<Order>, OrderRepository>();
+
+            services.AddScoped<IRepository<OrderDetail>, OrderDetailRepository>();
         }
     }
 }

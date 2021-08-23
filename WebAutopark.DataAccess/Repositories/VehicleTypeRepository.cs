@@ -7,7 +7,7 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class VehicleTypeRepository : ConnectionRepository<VehicleType>, IRepository<VehicleType>
+    public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
     {
         private const string QueryGetAll = "SELECT * FROM VehicleTypes";
 

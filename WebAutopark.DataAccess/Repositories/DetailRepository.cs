@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class DetailRepository : ConnectionRepository<Detail>, IRepository<Detail>
+    public class DetailRepository : ConnectionRepository, IRepository<Detail>
     {
         private const string QueryGetAll = "SELECT * FROM Details";
 
