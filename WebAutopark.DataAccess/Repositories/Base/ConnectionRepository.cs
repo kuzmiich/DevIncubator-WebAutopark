@@ -4,18 +4,8 @@ using System.Threading.Tasks;
 
 namespace WebAutopark.DataAccess.Repositories.Base
 {
-    public abstract class ConnectionRepository<T> : IDisposable, IAsyncDisposable
+    public abstract class ConnectionRepository : IDisposable, IAsyncDisposable
     {
-        #region Query
-
-        protected readonly string QueryGetAll;
-        protected readonly string QueryGetById;
-        protected readonly string QueryCreate;
-        protected readonly string QueryUpdate;
-        protected readonly string QueryDelete;
-
-        #endregion
-        
         protected readonly DbConnection DbConnection;
         
         protected ConnectionRepository(DbConnection dbConnection)
