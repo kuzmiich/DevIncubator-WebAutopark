@@ -39,6 +39,7 @@ namespace WebAutopark.DataAccess.Repositories
                                            + "EngineConsumption = @EngineConsumption, "
                                            + "EnergyTankCapacity = @EnergyTankCapacity "
                                            + "WHERE VehicleId = @VehicleId";
+        private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
 
         public VehicleRepository(DbConnection dbConnection) : base(dbConnection)
         {

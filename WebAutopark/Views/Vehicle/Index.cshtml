@@ -70,10 +70,10 @@
                     @Html.DisplayFor(modelItem => item.EngineConsumption)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KmPerFullTank())
+                    @Html.DisplayFor(modelItem => item.KmPerFullTank)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth())
+                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth)
                 </td>
                 <td class="text-center">
                     @Html.ActionLink("View", "Get", new { id=item.VehicleTypeId }) |
