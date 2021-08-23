@@ -16,7 +16,8 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [ActionName("Index")]
+        public async Task<IActionResult> GetAll()
         {
             var details = (await _detailRepository.GetAll()).OrderBy(detail 
                 => detail.VehicleTypeId);
