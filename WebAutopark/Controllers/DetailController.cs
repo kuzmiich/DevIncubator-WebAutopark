@@ -17,15 +17,14 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [ActionName("Index")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Index()
         {
             var orderedEnumerable = await _detailRepository.GetAll();
 
             return View(orderedEnumerable);
         }
         [HttpGet]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> DetailInfo(int id)
         {
             var getModel = await _detailRepository.Get(id);
 
@@ -36,14 +35,14 @@ namespace WebAutopark.Controllers
         }
         
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult DetailCreate()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Detail detail)
+        public async Task<IActionResult> DetailCreate(Detail detail)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +54,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> DetailUpdate(int id)
         {
             var updateModel = await _detailRepository.Get(id);
             
@@ -66,7 +65,7 @@ namespace WebAutopark.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(Detail detail)
+        public async Task<IActionResult> DetailUpdate(Detail detail)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +77,7 @@ namespace WebAutopark.Controllers
         }
         
         [HttpGet]
-        [ActionName("Delete")]
+        [ActionName("DetailDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var deleteModel = await _detailRepository.Get(id);
@@ -88,8 +87,9 @@ namespace WebAutopark.Controllers
             
             return View(deleteModel);
         }
+
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DetailDelete(int id)
         {
             await _detailRepository.Delete(id);
             

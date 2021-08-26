@@ -16,8 +16,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [ActionName("Index")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Index()
         {
             var details = await _detailRepository.GetAll();
 
@@ -25,7 +24,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> VehicleTypeInfo(int id)
         {
             var getModel = await _detailRepository.Get(id);
 
@@ -36,14 +35,14 @@ namespace WebAutopark.Controllers
         }
         
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult VehicleTypeCreate()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(VehicleType detail)
+        public async Task<IActionResult> VehicleTypeCreate(VehicleType detail)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +55,7 @@ namespace WebAutopark.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> VehicleTypeUpdate(int id)
         {
             var updateModel = await _detailRepository.Get(id);
             
@@ -67,7 +66,7 @@ namespace WebAutopark.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(VehicleType vehicleType)
+        public async Task<IActionResult> VehicleTypeUpdate(VehicleType vehicleType)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +78,7 @@ namespace WebAutopark.Controllers
         }
         
         [HttpGet]
-        [ActionName("Delete")]
+        [ActionName("VehicleTypeDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var deleteModel = await _detailRepository.Get(id);
@@ -90,7 +89,7 @@ namespace WebAutopark.Controllers
             return View(deleteModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> VehicleTypeDelete(int id)
         {
             await _detailRepository.Delete(id);
             

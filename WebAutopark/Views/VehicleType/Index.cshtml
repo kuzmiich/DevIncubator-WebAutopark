@@ -28,9 +28,9 @@
                     @Html.DisplayFor(modelItem => item.TaxCoefficient)
                 </td>
                 <td class="text-center">
-                    @Html.ActionLink("View", "Get", new { id=item.VehicleTypeId }) |
-                    @Html.ActionLink("Edit", "Update", new { id=item.VehicleTypeId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleTypeId })
+                    @Html.ActionLink("View", "VehicleTypeInfo", new { id=item.VehicleTypeId }) |
+                    @Html.ActionLink("Edit", "VehicleTypeUpdate", new { id=item.VehicleTypeId }) |
+                    @Html.ActionLink("Delete", "VehicleTypeDelete", new { id = item.VehicleTypeId })
                 </td>
             </tr>
         }
@@ -38,5 +38,5 @@
 </table>
 
 <div class="text-center mt-3">
-    <a class="btn btn-primary" asp-action="Create">Create new</a>
+    <a class="btn btn-primary" asp-action="VehicleTypeCreate">Create new</a>
 </div>
