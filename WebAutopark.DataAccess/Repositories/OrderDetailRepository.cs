@@ -8,8 +8,23 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class OrderDetailRepository : ConnectionRepository<OrderDetail>, IRepository<OrderDetail>
+    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetail>
     {
+        private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
+                                           + "FROM OrderDetails JOIN Details "
+                                           + "ON OrderDetails.DetailId = Details.DetailId "
+                                           + "ORDER BY OrderDetailId";
+
+        private const string QueryGetById = "SELECT * FROM OrderDetails WHERE OrderDetailId = @id";
+
+        private const string QueryCreate = "INSERT INTO OrderDetails (OrderId, DetailId, DetailAmount) "
+                                           + "VALUES (@OrderId, @DetailId, @DetailAmount)";
+
+        private const string QueryUpdate = "UPDATE OrderDetails SET OrderId = @OrderId, DetailId = @DetailId, DetailAmount = @DetailAmount "
+                                           + "WHERE OrderDetailId = @id";
+
+        private const string QueryDelete = "DELETE FROM OrderDetails WHERE OrdeDetailId = @id";
+
         public OrderDetailRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
@@ -43,6 +58,6 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task Update(OrderDetail element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
-        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, id);
+        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }
 }

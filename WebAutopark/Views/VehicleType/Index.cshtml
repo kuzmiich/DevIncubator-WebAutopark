@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebAutopark.Core.Entities.VehicleType>
+
+@{
+    ViewData["Title"] = "VehicleTypeList";
+}
+<h1>VehicleType page</h1>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaxCoefficient)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxCoefficient)
+                </td>
+                <td class="text-center">
+                    @Html.ActionLink("View", "Get", new { id=item.VehicleTypeId }) |
+                    @Html.ActionLink("Edit", "Update", new { id=item.VehicleTypeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleTypeId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-center mt-3">
+    <a class="btn btn-primary" asp-action="Create">Create new</a>
+</div>
