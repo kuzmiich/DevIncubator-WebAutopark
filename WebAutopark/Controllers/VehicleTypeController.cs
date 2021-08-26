@@ -18,9 +18,9 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var details = await _detailRepository.GetAll();
+            var vehicleTypes = await _detailRepository.GetAll();
 
-            return View(details);
+            return View(vehicleTypes);
         }
 
         [HttpGet]

@@ -2,7 +2,7 @@
 
 @{ ViewData["Title"] = "VehicleList"; }
 
-<h1>VehicleType page</h1>
+<h1 class="text-center">VehicleType page</h1>
 <table class="table">
     <thead class="thead-light">
         <tr>
@@ -10,80 +10,84 @@
                 Id
             </th>
             <th>
-                VehicleType
+                @Html.DisplayNameFor(model => model.ModelName)
             </th>
             <th>
-                Model
+                @Html.DisplayNameFor(model => model.VehicleTypeId)
             </th>
             <th>
-                Registration date
+                @Html.DisplayNameFor(model => model.RegistrationNumber)
             </th>
             <th>
-                Weight
+                @Html.DisplayNameFor(model => model.ManufactureYear)
             </th>
             <th>
-                Manufacture Year
+                @Html.DisplayNameFor(model => model.Weight)
             </th>
             <th>
-                Mileage
+                @Html.DisplayNameFor(model => model.Mileage)
             </th>
             <th>
-                Fuel tank
+                @Html.DisplayNameFor(model => model.Color)
             </th>
             <th>
-                Color
+                @Html.DisplayNameFor(model => model.EngineConsumption)
             </th>
             <th>
-                Consumption
+                @Html.DisplayNameFor(model => model.TankCapacity)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KmPerFullTank)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleType.TypeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModelName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Weight)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ManufactureYear)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mileage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EngineConsumption)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KmPerFullTank)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("View", "Get", new { id=item.VehicleTypeId }) |
-                    @Html.ActionLink("Edit", "Update", new { id=item.VehicleTypeId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleTypeId })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactureYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineConsumption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TankCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KmPerFullTank)
+            </td>
+            <td class="text-center" style="min-width: 160px">
+                @Html.ActionLink("View", "VehicleInfo", new { id = item.VehicleId }) |
+                @Html.ActionLink("Edit", "VehicleUpdate", new { id = item.VehicleId }) |
+                @Html.ActionLink("Delete", "VehicleDelete", new { id = item.VehicleId })
+            </td>
+        </tr>
         }
     </tbody>
 </table>
 <div class="text-center">
-    <a class="btn btn-primary" asp-action="Create">Create new</a>
+    <a class="btn btn-primary" asp-action="VehicleCreate">Create new</a>
 </div>

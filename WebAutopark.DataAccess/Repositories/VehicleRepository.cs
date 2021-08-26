@@ -9,20 +9,20 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class VehicleRepository : ConnectionRepository, IRepository<Vehicle>
     {
-        private const string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoeff " + 
+        private const string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoefficient " + 
                                            "FROM Vehicles AS V " + 
                                            "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId " +
                                            "ORDER BY VehicleId";
 
-        private const string QueryGetById = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoeff " + 
+        private const string QueryGetById = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoefficient " + 
                                             "FROM Vehicles AS V " +
                                             "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId " +
                                             "WHERE V.VehicleId = @id";
 
-        private const string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, ModelName, RegistrationNumber, Weight, ManufactureYear, " +
-                                           "Mileage, Color, EngineType, EngineCapacity, EngineConsumption, EnergyTankCapacity) " +
-                                           "VALUES(@VehicleTypeId, @ModelName, @RegistrationNumber, @Weight, @ManufactureYear, " +
-                                           "@Mileage, @Color, @EngineType, @EngineCapacity, @EngineConsumption, @EnergyTankCapacity)";
+        private const string QueryCreate = "INSERT INTO Vehicles " +
+                                           "(VehicleTypeId, ModelName, RegistrationNumber, Weight, ManufactureYear, Mileage, Color, EngineConsumption, TankCapacity) " +
+                                           "VALUES" +
+                                           "(@VehicleTypeId, @ModelName, @RegistrationNumber, @Weight, @ManufactureYear, @Mileage, @Color, @EngineConsumption, @TankCapacity)";
 
 
         private const string QueryUpdate = "UPDATE Vehicles SET " +
@@ -33,10 +33,8 @@ namespace WebAutopark.DataAccess.Repositories
                                            "ManufactureYear = @ManufactureYear, " +
                                            "Mileage = @Mileage, " +
                                            "Color = @Color, " +
-                                           "EngineType = @EngineType, " +
-                                           "EngineCapacity = @EngineCapacity, " +
                                            "EngineConsumption = @EngineConsumption, " +
-                                           "EnergyTankCapacity = @EnergyTankCapacity " +
+                                           "TankCapacity = @TankCapacity " +
                                            "WHERE VehicleId = @VehicleId";
 
         private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";

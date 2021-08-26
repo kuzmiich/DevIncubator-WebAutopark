@@ -9,7 +9,8 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class DetailRepository : ConnectionRepository, IRepository<Detail>
     {
-        private const string QueryGetAll = "SELECT * FROM Details ORDER BY DetailId";
+        private const string QueryGetAll = "SELECT * FROM Details " +
+                                           "ORDER BY DetailId";
 
         private const string QueryGetById = "SELECT * FROM Details WHERE DetailId = @id";
 

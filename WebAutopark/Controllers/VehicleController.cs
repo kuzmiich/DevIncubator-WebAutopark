@@ -17,34 +17,83 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [ActionName("Index")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Index()
         {
-            var details = await _vehicleRepository.GetAll();
+            var vehicles = await _vehicleRepository.GetAll();
 
-            return View(details);
+            return View(vehicles);
         }
 
         [HttpGet]
-        [ActionName("Get")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> VehicleInfo(int id)
         {
-            throw new System.NotImplementedException();
+            var getModel = await _vehicleRepository.Get(id);
+
+            if (getModel is null)
+                return NotFound();
+
+            return View(getModel);
+        }
+
+        [HttpGet]
+        public IActionResult VehicleCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VehicleCreate(Vehicle vehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                await _vehicleRepository.Create(vehicle);
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VehicleUpdate(int id)
+        {
+            var updateModel = await _vehicleRepository.Get(id);
+
+            if (updateModel is null)
+                return NotFound();
+
+            return View(updateModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Vehicle vehicle)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VehicleUpdate(Vehicle vehicle)
         {
-            throw new System.NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                await _vehicleRepository.Update(vehicle);
+                return RedirectToAction("Index");
+            }
+
+            return View(vehicle);
         }
 
-        public async Task<IActionResult> Delete()
+        [HttpGet]
+        [ActionName("VehicleDelete")]
+        public async Task<IActionResult> ConfirmDelete(int id)
         {
-            throw new System.NotImplementedException();
-        }
+            var deleteModel = await _vehicleRepository.Get(id);
 
-        public async Task<IActionResult> Update()
+            if (deleteModel is null)
+                return NotFound();
+
+            return View(deleteModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> VehicleDelete(int id)
         {
-            throw new System.NotImplementedException();
+            await _vehicleRepository.Delete(id);
+
+            return RedirectToAction("Index");
         }
     }
 }
