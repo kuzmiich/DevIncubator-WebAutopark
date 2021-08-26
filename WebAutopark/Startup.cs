@@ -24,7 +24,9 @@ namespace WebAutopark
         {
             var connectionString = Configuration.GetConnectionString("DevelopmentDB");
 
-            services.AddTransient<DbConnection>(_ => new SqlConnection(connectionString));
+            services.AddScoped<DbConnection>(_ => new SqlConnection(connectionString));
+
+            services.AddScoped<IDbProvider, DbProvider>();
 
             services.AddEntityRepositories();
 

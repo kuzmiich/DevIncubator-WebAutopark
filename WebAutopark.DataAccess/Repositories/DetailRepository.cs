@@ -2,24 +2,15 @@ using Dapper;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
+using Dapper.Specification.Provider;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class DetailRepository : ConnectionRepository, IRepository<Detail>
+    public class DetailRepository : ConnectionRepository<Detail>, IRepository<Detail>
     {
-        private const string QueryGetAll = "SELECT * FROM Details ORDER BY DetailId";
-
-        private const string QueryGetById = "SELECT * FROM Details WHERE DetailId = @id";
-
-        private const string QueryCreate = "INSERT INTO Details (Name) VALUES(@Name)";
-
-        private const string QueryUpdate = "UPDATE Details SET Name = @Name WHERE DetailId = @DetailId";
-
-        private const string QueryDelete = "DELETE FROM Details WHERE DetailId = @id";
-
-        public DetailRepository(DbConnection dbConnection) : base(dbConnection)
+        public DetailRepository(DbConnection dbConnection, IDbProvider provider) : base(dbConnection, provider)
         {
         }
 

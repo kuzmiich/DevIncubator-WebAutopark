@@ -3,29 +3,15 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper.Specification.Provider;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetail>
+    public class OrderDetailRepository : ConnectionRepository<OrderDetail>, IRepository<OrderDetail>
     {
-        private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
-                                           + "FROM OrderDetails JOIN Details "
-                                           + "ON OrderDetails.DetailId = Details.DetailId "
-                                           + "ORDER BY OrderDetailId";
-
-        private const string QueryGetById = "SELECT * FROM OrderDetails WHERE OrderDetailId = @id";
-
-        private const string QueryCreate = "INSERT INTO OrderDetails (OrderId, DetailId, DetailAmount) "
-                                           + "VALUES (@OrderId, @DetailId, @DetailAmount)";
-
-        private const string QueryUpdate = "UPDATE OrderDetails SET OrderId = @OrderId, DetailId = @DetailId, DetailAmount = @DetailAmount "
-                                           + "WHERE OrderDetailId = @id";
-
-        private const string QueryDelete = "DELETE FROM OrderDetails WHERE OrdeDetailId = @id";
-
-        public OrderDetailRepository(DbConnection dbConnection) : base(dbConnection)
+        public OrderDetailRepository(DbConnection dbConnection, IDbProvider provider) : base(dbConnection, provider)
         {
         }
         public async Task<OrderDetail> Get(int id)
