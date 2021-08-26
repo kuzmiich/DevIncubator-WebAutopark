@@ -7,8 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.DataAccess.Repositories.Base;
-using WebAutopark.DataAccess.Repositories.Specification;
-using WebAutopark.DataAccess.Repositories.Specification.Provider;
 
 namespace WebAutopark.Extensions
 {

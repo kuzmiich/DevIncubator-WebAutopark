@@ -4,7 +4,6 @@ using System.Data.Common;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
-using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark.DataAccess.Repositories
 {

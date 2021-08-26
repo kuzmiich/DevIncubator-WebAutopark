@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace WebAutopark.DataAccess.Repositories.Specification.Provider.DbEntity
+namespace Dapper.Specification.Provider.DbEntity
 {
     public class EntityInfo
     {

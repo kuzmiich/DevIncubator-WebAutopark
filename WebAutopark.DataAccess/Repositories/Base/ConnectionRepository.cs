@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Data.Common;
 using System.Threading.Tasks;
-using WebAutopark.DataAccess.Repositories.Specification.Provider;
-using WebAutopark.DataAccess.Repositories.Specification.Provider.Extensions;
+using Dapper.Specification;
+using Dapper.Specification.Provider;
+using Dapper.Specification.Provider.Extensions;
 
-namespace WebAutopark.DataAccess.Repositories.Specification
+namespace WebAutopark.DataAccess.Repositories.Base
 {
     public abstract class ConnectionRepository<T> : IDisposable, IAsyncDisposable
     {
@@ -20,11 +21,11 @@ namespace WebAutopark.DataAccess.Repositories.Specification
         
         protected readonly DbConnection DbConnection;
 
-        private static readonly IDbProvider _dbProvider = new DbProvider();
+        private static readonly IDbProvider DbProvider = new DbProvider();
         
         private ConnectionRepository()
         {
-            var entityInfo = _dbProvider.GetDbEntity<T>();
+            var entityInfo = DbProvider.GetDbEntity<T>();
             QueryGetAll = $"SELECT * From {entityInfo.TableName} {entityInfo.CustomTypeProperties}";
 
             QueryGetById = $"SELECT * From {entityInfo.TableName} {entityInfo.CustomTypeProperties} WHERE {entityInfo.KeyName}Id = @Id";

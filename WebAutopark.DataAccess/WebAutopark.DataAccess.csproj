@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dapper.Specification\Dapper.Specification.csproj" />
     <ProjectReference Include="..\WebAutopark.Core\WebAutopark.Core.csproj" />
   </ItemGroup>
 

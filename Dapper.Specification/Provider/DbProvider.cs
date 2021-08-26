@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Dapper.Specification.Provider.DbEntity;
 using WebAutopark.Core.Entities;
-using WebAutopark.DataAccess.Repositories.Specification.Provider.DbEntity;
 
-namespace WebAutopark.DataAccess.Repositories.Specification.Provider
+namespace Dapper.Specification.Provider
 {
     public class DbProvider : IDbProvider
     {
