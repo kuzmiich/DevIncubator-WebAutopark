@@ -1,11 +1,9 @@
 @model IEnumerable<WebAutopark.Core.Entities.Vehicle>
 
-@{ ViewData["Title"] = "ViewVehicles"; }
+@{ ViewData["Title"] = "VehicleList"; }
 
-<hr />
-<h4 class="text-center my-1">Vehicles list</h4>
-<hr />
-<table class="table table-striped table-borderless table-sm">
+<h1>VehicleType page</h1>
+<table class="table">
     <thead class="thead-light">
         <tr>
             <th>
@@ -72,16 +70,20 @@
                     @Html.DisplayFor(modelItem => item.EngineConsumption)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KmPerFullTank())
+                    @Html.DisplayFor(modelItem => item.KmPerFullTank)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth())
+                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth)
                 </td>
-                
+                <td class="text-center">
+                    @Html.ActionLink("View", "Get", new { id=item.VehicleTypeId }) |
+                    @Html.ActionLink("Edit", "Update", new { id=item.VehicleTypeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleTypeId })
+                </td>
             </tr>
         }
     </tbody>
 </table>
 <div class="text-center">
-    <a class="btn btn-primary" asp-action="Create">Add vehicle</a>
+    <a class="btn btn-primary" asp-action="Create">Create new</a>
 </div>

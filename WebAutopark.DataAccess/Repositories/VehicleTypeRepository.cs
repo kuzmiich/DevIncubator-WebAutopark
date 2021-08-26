@@ -4,13 +4,13 @@ using System.Data.Common;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
-using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark.DataAccess.Repositories
 {
     public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
     {
-        private const string QueryGetAll = "SELECT * FROM VehicleTypes";
+        private const string QueryGetAll = "SELECT * FROM VehicleTypes " +
+                                           "ORDER BY VehicleTypeId";
 
         private const string QueryGetById = "SELECT * FROM VehicleTypes WHERE VehicleTypeId = @id";
 
@@ -24,7 +24,7 @@ namespace WebAutopark.DataAccess.Repositories
         {
         }
 
-        public async Task<VehicleType> Get(int id) => await DbConnection.QueryFirstAsync<VehicleType>(QueryGetById, id);
+        public async Task<VehicleType> Get(int id) => await DbConnection.QueryFirstAsync<VehicleType>(QueryGetById, new { id });
 
         public async Task<IEnumerable<VehicleType>> GetAll() => await DbConnection.QueryAsync<VehicleType>(QueryGetAll);
 
@@ -32,6 +32,6 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task Update(VehicleType element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
-        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, id);
+        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }
 }

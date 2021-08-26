@@ -1,17 +1,15 @@
-using WebAutopark.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using WebAutopark.Core.Enums;
 
-
 namespace WebAutopark.Core.Entities
 {
     public class Vehicle
     {
-        private const double WeightCoefficient = 0.0013;
-        private const double ShiftForTax = 5;
-        private const double TaxCoefficient = 30;
+        private const double WeightCoefficient = 0.0013d;
+        private const double ShiftForTax = 5d;
+        private const double TaxCoefficient = 30d;
         
         #region Vehicle Property
 
@@ -28,11 +26,9 @@ namespace WebAutopark.Core.Entities
         public double EngineConsumption { get; set; }
         public double EnergyTankCapacity { get; set; }
 
-        #endregion
-          
-        public virtual double GetCalcTaxPerMonth() => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
+        public virtual double GetCalcTaxPerMonth => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
         
-        public virtual double KmPerFullTank() => EnergyTankCapacity / EngineConsumption;
+        public virtual double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
 
         #endregion
     }

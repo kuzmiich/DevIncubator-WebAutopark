@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
-using WebAutopark.DataAccess.Repositories.Specification;
 
 namespace WebAutopark.DataAccess.Repositories
 {
@@ -18,17 +17,19 @@ namespace WebAutopark.DataAccess.Repositories
                                            "JOIN Vehicles " +
                                            "ON Orders.VehicleId = Vehicles.VehicleId" +
                                            "LEFT JOIN Details " +
-                                           "ON OrderDetails.DetailId = Details.DetailId";
+                                           "ON OrderDetails.DetailId = Details.DetailId " +
+                                           "ORDER BY OrderId";
 
-        private const string QueryGetById = "SELECT * FROM Orders, Vehicles.VehicleId, Vehicles.VehicleTypeId, Vehicles.ModelName, Vehicles.RegistrationNumber, Vehicles.Weight, Vehicles.ManufactureYear, "
-                                            + "Vehicles.Mileage, Vehicles.ColorType, Vehicles.EngineType, Vehicles.EngineCapacity, Vehicles.EngineConsumption, Vehicles.EnergyTankCapacity, "
-                                            + "OrderDetails.OrderElementId, OrderDetails.OrderId, OrderDetails.DetailId, OrderDetails.DetailAmount, "
-                                            + "Detail.DetailId, Detail.Name "
-                                            + "FROM Orders"
-                                            + "LEFT JOIN OrderDetails ON Orders.OrderId = OrderDetails.OrderId "
-                                            + "JOIN Vehicles ON Orders.VehicleId = Vehicles.VehicleId "
-                                            + "LEFT JOIN Details ON OrderDetails.DetailId = OrderDetails.DetailId "
-                                            + "WHERE Orders.OrderId = @id";
+        private const string QueryGetById = "SELECT * FROM Orders, Vehicles.VehicleId, Vehicles.VehicleTypeId, Vehicles.ModelName, Vehicles.RegistrationNumber, " +
+                                            "Vehicles.Weight, Vehicles.ManufactureYear, Vehicles.Mileage, Vehicles.ColorType, Vehicles.EngineType, " +
+                                            "Vehicles.EngineCapacity, Vehicles.EngineConsumption, Vehicles.EnergyTankCapacity, " + 
+                                            "OrderDetails.OrderElementId, OrderDetails.OrderId, OrderDetails.DetailId, OrderDetails.DetailAmount, " + 
+                                            "Detail.DetailId, Detail.Name " + 
+                                            "FROM Orders" + 
+                                            "LEFT JOIN OrderDetails ON Orders.OrderId = OrderDetails.OrderId " + 
+                                            "JOIN Vehicles ON Orders.VehicleId = Vehicles.VehicleId " + 
+                                            "LEFT JOIN Details ON OrderDetails.DetailId = OrderDetails.DetailId " + 
+                                            "WHERE Orders.OrderId = @id";
 
         private const string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
 
@@ -76,7 +77,7 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task Update(Order element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
-        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, id);
+        public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
 
         
     }

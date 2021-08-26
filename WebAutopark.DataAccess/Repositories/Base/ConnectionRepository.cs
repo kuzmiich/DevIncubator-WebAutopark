@@ -2,7 +2,7 @@ using System;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-namespace WebAutopark.DataAccess.Repositories.Specification
+namespace WebAutopark.DataAccess.Repositories.Base
 {
     public abstract class ConnectionRepository : IDisposable, IAsyncDisposable
     {
@@ -12,7 +12,7 @@ namespace WebAutopark.DataAccess.Repositories.Specification
         {
             DbConnection = dbConnection;
         }
-        
+
         public void Dispose() => DbConnection.Dispose();
 
         public ValueTask DisposeAsync() => DbConnection.DisposeAsync();
