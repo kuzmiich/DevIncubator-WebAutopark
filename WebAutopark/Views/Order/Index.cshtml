@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebAutopark.BusinessLogic.Models.OrderViewModel>
+
+@{
+    ViewData["Title"] = "OrderList";
+}
+<h1 class="text-center">Order page</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDetails)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) 
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDetails)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("View", "OrderInfo", new { id = item.OrderId }) |
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="text-center mt-3">
+    <a class="btn btn-primary" asp-action="OrderInfo">Create new</a>
+</div>

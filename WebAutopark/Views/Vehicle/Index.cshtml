@@ -1,8 +1,9 @@
-@model IEnumerable<WebAutopark.Core.Entities.Vehicle>
+@model IEnumerable<WebAutopark.BusinessLogic.Models.VehicleViewModel>
 
 @{ ViewData["Title"] = "VehicleList"; }
 
 <h1 class="text-center">VehicleType page</h1>
+
 <table class="table">
     <thead class="thead-light">
         <tr>
@@ -36,55 +37,57 @@
             <th>
                 @Html.DisplayNameFor(model => model.TankCapacity)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KmPerFullTank)
-            </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleTypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufactureYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mileage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EngineConsumption)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TankCapacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KmPerFullTank)
-            </td>
-            <td class="text-center" style="min-width: 160px">
-                @Html.ActionLink("View", "VehicleInfo", new { id = item.VehicleId }) |
-                @Html.ActionLink("Edit", "VehicleUpdate", new { id = item.VehicleId }) |
-                @Html.ActionLink("Delete", "VehicleDelete", new { id = item.VehicleId })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleTypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufactureYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mileage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineConsumption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TankCapacity)
+                </td>
+                <td class="text-center" style="min-width: 160px">
+                    @Html.ActionLink("View", "VehicleInfo", new { id = item.VehicleId }) |
+                    @Html.ActionLink("Edit", "VehicleUpdate", new { id = item.VehicleId }) |
+                    @Html.ActionLink("Delete", "VehicleDelete", new { id = item.VehicleId })
+                </td>
+                <td class="text-center" style="min-width: 160px">
+                    @using (Html.BeginForm("OrderCreate", "Order", new { id = item.VehicleId }, FormMethod.Post))
+                    {
+                        @Html.TextBoxFor(v => item.VehicleId, new { @readonly = "readonly", @hidden = "hidden" })
+                        <button type="submit" class="btn btn-link">Create order</button>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

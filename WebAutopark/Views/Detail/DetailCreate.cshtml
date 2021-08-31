@@ -1,4 +1,4 @@
-﻿@model WebAutopark.Core.Entities.Detail
+﻿@model WebAutopark.BusinessLogic.Models.DetailViewModel
 @{
     ViewData["Title"] = "DetailCreate";
 }
@@ -14,7 +14,7 @@
                 <input asp-for="Name" class="form-control"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <input type="submit" value="Create" class="btn btn-primary"/>
             </div>
         </form>
