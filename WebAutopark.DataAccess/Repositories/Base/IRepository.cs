@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAutopark.BusinessLogic.Models;
 
 namespace WebAutopark.DataAccess.Repositories.Base
 {

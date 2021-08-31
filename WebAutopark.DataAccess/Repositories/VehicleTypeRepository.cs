@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
+using WebAutopark.BusinessLogic.Models;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
+    public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleTypeViewModel>
     {
         private const string QueryGetAll = "SELECT * FROM VehicleTypes " +
                                            "ORDER BY VehicleTypeId";
@@ -24,13 +25,13 @@ namespace WebAutopark.DataAccess.Repositories
         {
         }
 
-        public async Task<VehicleType> Get(int id) => await DbConnection.QueryFirstAsync<VehicleType>(QueryGetById, new { id });
+        public async Task<VehicleTypeViewModel> Get(int id) => await DbConnection.QueryFirstAsync<VehicleTypeViewModel>(QueryGetById, new { id });
 
-        public async Task<IEnumerable<VehicleType>> GetAll() => await DbConnection.QueryAsync<VehicleType>(QueryGetAll);
+        public async Task<IEnumerable<VehicleTypeViewModel>> GetAll() => await DbConnection.QueryAsync<VehicleTypeViewModel>(QueryGetAll);
 
-        public async Task Create(VehicleType element) => await DbConnection.ExecuteAsync(QueryCreate, element);
+        public async Task Create(VehicleTypeViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
 
-        public async Task Update(VehicleType element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
+        public async Task Update(VehicleTypeViewModel element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }

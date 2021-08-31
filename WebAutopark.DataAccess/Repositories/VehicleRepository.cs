@@ -1,18 +1,21 @@
 using Dapper;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using System.Threading.Tasks;
+using WebAutopark.BusinessLogic.Models;
 using WebAutopark.Core.Entities;
+using WebAutopark.Core.Enums;
 using WebAutopark.DataAccess.Repositories.Base;
+using WebAutopark.DataAccess.Repositories.ExtendRepository;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class VehicleRepository : ConnectionRepository, IRepository<Vehicle>
+    public class VehicleRepository : ConnectionRepository, IVehicleRepository
     {
         private const string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoefficient " + 
-                                           "FROM Vehicles AS V " + 
-                                           "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId " +
-                                           "ORDER BY VehicleId";
+                                           "FROM Vehicles AS V " +
+                                           "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId";
 
         private const string QueryGetById = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.TypeName, VT.TaxCoefficient " + 
                                             "FROM Vehicles AS V " +
@@ -43,13 +46,49 @@ namespace WebAutopark.DataAccess.Repositories
         {
         }
 
-        public async Task<Vehicle> Get(int id) => await DbConnection.QueryFirstAsync<Vehicle>(QueryGetById, new { id });
+        private static string GetVehicleSortString(VehicleSortCriteria sortCriteria) => sortCriteria switch
+            {
+                VehicleSortCriteria.Name => "V.ModelName",
+                VehicleSortCriteria.Type => "VT.TypeName",
+                VehicleSortCriteria.Mileage => "V.Mileage",
+                _ => "V.VehicleId",
+            };
 
-        public async Task<IEnumerable<Vehicle>> GetAll() => await DbConnection.QueryAsync<Vehicle>(QueryGetAll);
+        public async Task<IEnumerable<VehicleViewModel>> GetAll(VehicleSortCriteria sortCriteria, bool isAscending = true)
+        {
+            var getAllSorted = isAscending ? $"{QueryGetAll} ORDER BY {GetVehicleSortString(sortCriteria)} ASC" : 
+                $"{QueryGetAll} ORDER BY {GetVehicleSortString(sortCriteria)} DESC";
 
-        public async Task Create(Vehicle element) => await DbConnection.ExecuteAsync(QueryCreate, element);
+            return await DbConnection.QueryAsync<VehicleViewModel, VehicleTypeViewModel, VehicleViewModel>(getAllSorted,
+                (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                },
+                splitOn: "VTId");
+        }
 
-        public async Task Update(Vehicle element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
+        public async Task<IEnumerable<VehicleViewModel>> GetAll() => await GetAll(VehicleSortCriteria.Id);
+
+        public async Task<VehicleViewModel> Get(int id)
+        {
+            var collection = await DbConnection.QueryAsync<VehicleViewModel, VehicleTypeViewModel, VehicleViewModel>(QueryGetById,
+                (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                },
+                splitOn: "VTId",
+                param: new { id }
+            );
+
+            return collection.First();
+        }
+            
+
+        public async Task Create(VehicleViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
+
+        public async Task Update(VehicleViewModel element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }

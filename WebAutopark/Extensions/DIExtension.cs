@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WebAutopark.Core.Entities;
+using WebAutopark.BusinessLogic.Models;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.DataAccess.Repositories.Base;
+using WebAutopark.DataAccess.Repositories.ExtendRepository;
 
 namespace WebAutopark.Extensions
 {
@@ -9,15 +10,15 @@ namespace WebAutopark.Extensions
     {
         public static void AddEntityRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepository<Detail>, DetailRepository>();
+            services.AddScoped<IRepository<DetailViewModel>, DetailRepository>();
 
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
 
-            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
+            services.AddScoped<IRepository<VehicleTypeViewModel>, VehicleTypeRepository>();
 
-            services.AddScoped<IRepository<Order>, OrderRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
-            services.AddScoped<IRepository<OrderDetail>, OrderDetailRepository>();
+            services.AddScoped<IRepository<OrderDetailViewModel>, OrderDetailRepository>();
         }
     }
 }

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebAutopark.BusinessLogic\WebAutopark.BusinessLogic.csproj" />
     <ProjectReference Include="..\WebAutopark.Core\WebAutopark.Core.csproj" />
   </ItemGroup>
 

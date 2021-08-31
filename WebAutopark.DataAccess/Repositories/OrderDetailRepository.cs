@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAutopark.BusinessLogic.Models;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetail>
+    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetailViewModel>
     {
         private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
-                                           + "FROM OrderDetails JOIN Details "
+                                           + "FROM OrderDetails INNER JOIN Details "
                                            + "ON OrderDetails.DetailId = Details.DetailId "
                                            + "ORDER BY OrderDetailId";
 
@@ -28,9 +29,21 @@ namespace WebAutopark.DataAccess.Repositories
         public OrderDetailRepository(DbConnection dbConnection) : base(dbConnection)
         {
         }
-        public async Task<OrderDetail> Get(int id)
+
+        public async Task<IEnumerable<OrderDetailViewModel>> GetAll() =>
+            await DbConnection.QueryAsync<OrderDetailViewModel, DetailViewModel, OrderDetailViewModel>
+            (
+                QueryGetAll, (orderElement, detail) =>
+                {
+                    orderElement.Detail = detail;
+                    return orderElement;
+                },
+                splitOn: "OrderDetailId"
+            );
+
+        public async Task<OrderDetailViewModel> Get(int id)
         {
-            var collection = await DbConnection.QueryAsync<OrderDetail, Detail, OrderDetail>
+            var collection = await DbConnection.QueryAsync<OrderDetailViewModel, DetailViewModel, OrderDetailViewModel>
             (
                 QueryGetById, (orderElement, detail) =>
                 {
@@ -43,20 +56,9 @@ namespace WebAutopark.DataAccess.Repositories
 
             return collection.First();
         }
-        public async Task<IEnumerable<OrderDetail>> GetAll() =>
-            await DbConnection.QueryAsync<OrderDetail, Detail, OrderDetail>
-            (
-                QueryGetAll, (orderElement, detail) =>
-                {
-                    orderElement.Detail = detail;
-                    return orderElement;
-                },
-                splitOn: "OrderDetailId"
-            );
+        public async Task Create(OrderDetailViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
 
-        public async Task Create(OrderDetail element) => await DbConnection.ExecuteAsync(QueryCreate, element);
-
-        public async Task Update(OrderDetail element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
+        public async Task Update(OrderDetailViewModel element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }
