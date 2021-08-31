@@ -1,19 +1,26 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WebAutopark.Core.Entities;
+using WebAutopark.BusinessLogic.Models;
+using WebAutopark.Core.Enums;
 using WebAutopark.DataAccess.Repositories.Base;
-using System.Collections.Generic;
+using WebAutopark.DataAccess.Repositories.ExtendRepository;
 
 namespace WebAutopark.Controllers
 {
     public class VehicleController : Controller
     {
-        private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IVehicleRepository _vehicleRepository;
 
-        public VehicleController(IRepository<Vehicle> vehicleRepository)
+        public VehicleController(IVehicleRepository vehicleRepository)
         {
             _vehicleRepository = vehicleRepository;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Index(VehicleSortCriteria criteria = VehicleSortCriteria.Id, bool isAscending = true)
+        {
+            var vehicles = await _vehicleRepository.GetAll(criteria, isAscending);
+            
+            return View(vehicles);
         }
 
         [HttpGet]
@@ -23,7 +30,6 @@ namespace WebAutopark.Controllers
 
             return View(vehicles);
         }
-
         [HttpGet]
         public async Task<IActionResult> VehicleInfo(int id)
         {
@@ -43,7 +49,7 @@ namespace WebAutopark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VehicleCreate(Vehicle vehicle)
+        public async Task<IActionResult> VehicleCreate(VehicleViewModel vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +72,7 @@ namespace WebAutopark.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VehicleUpdate(Vehicle vehicle)
+        public async Task<IActionResult> VehicleUpdate(VehicleViewModel vehicle)
         {
             if (ModelState.IsValid)
             {

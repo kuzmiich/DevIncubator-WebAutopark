@@ -1,16 +1,15 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WebAutopark.Core.Entities;
+using WebAutopark.BusinessLogic.Models;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        private readonly IRepository<VehicleType> _detailRepository;
+        private readonly IRepository<VehicleTypeViewModel> _detailRepository;
 
-        public VehicleTypeController(IRepository<VehicleType> detailRepository)
+        public VehicleTypeController(IRepository<VehicleTypeViewModel> detailRepository)
         {
             _detailRepository = detailRepository;
         }
@@ -42,7 +41,7 @@ namespace WebAutopark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VehicleTypeCreate(VehicleType detail)
+        public async Task<IActionResult> VehicleTypeCreate(VehicleTypeViewModel detail)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +65,7 @@ namespace WebAutopark.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VehicleTypeUpdate(VehicleType vehicleType)
+        public async Task<IActionResult> VehicleTypeUpdate(VehicleTypeViewModel vehicleType)
         {
             if (ModelState.IsValid)
             {

@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WebAutopark.Core.Entities;
+using WebAutopark.BusinessLogic.Models;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.Controllers
 {
     public class DetailController : Controller
     {
-        private readonly IRepository<Detail> _detailRepository;
+        private readonly IRepository<DetailViewModel> _detailRepository;
 
-        public DetailController(IRepository<Detail> detailRepository)
+        public DetailController(IRepository<DetailViewModel> detailRepository)
         {
             _detailRepository = detailRepository;
         }
@@ -42,7 +40,7 @@ namespace WebAutopark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailCreate(Detail detail)
+        public async Task<IActionResult> DetailCreate(DetailViewModel detail)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +63,7 @@ namespace WebAutopark.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailUpdate(Detail detail)
+        public async Task<IActionResult> DetailUpdate(DetailViewModel detail)
         {
             if (ModelState.IsValid)
             {
