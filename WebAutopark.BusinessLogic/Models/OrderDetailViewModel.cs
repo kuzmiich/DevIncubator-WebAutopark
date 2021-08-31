@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,15 @@ namespace WebAutopark.BusinessLogic.Models
     {
         public int OrderDetailId { get; set; }
 
+        [Required]
         public int OrderId { get; set; }
 
+        [Required]
         public int DetailId { get; set; }
 
-        public Detail Detail { get; set; }
+        public DetailViewModel Detail { get; set; }
 
+        [Range(1, int.MaxValue)]
         public int DetailAmount { get; set; }
     }
 }

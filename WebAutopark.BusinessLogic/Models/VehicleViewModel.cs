@@ -1,4 +1,5 @@
-﻿using WebAutopark.Core.Entities;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using WebAutopark.Core.Enums;
 
 namespace WebAutopark.BusinessLogic.Models
@@ -13,20 +14,21 @@ namespace WebAutopark.BusinessLogic.Models
 
         public int VehicleId { get; set; }
         public int VehicleTypeId { get; set; }
-        public VehicleType VehicleType { get; set; }
+        public VehicleTypeViewModel VehicleType { get; set; }
+        [MaxLength(30)] 
         public string ModelName { get; set; }
+        [MaxLength(20)] 
         public string RegistrationNumber { get; set; }
         public int ManufactureYear { get; set; }
         public int Weight { get; set; }
         public int Mileage { get; set; }
         public ColorType Color { get; set; }
-        public double TankCapacity { get; set; }
         public double EngineConsumption { get; set; }
-        public double EnergyTankCapacity { get; set; }
+        public double TankCapacity { get; set; }
+        
+        public virtual double GetCalcTaxPerMonth => (VehicleType is not null) ? Math.Round(Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2) : 0d;
 
-        public virtual double GetCalcTaxPerMonth => Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax;
-
-        public virtual double KmPerFullTank => EnergyTankCapacity / EngineConsumption;
+        public virtual double KmPerFullTank => (TankCapacity != 0 || EngineConsumption != 0) ? Math.Round(TankCapacity / EngineConsumption, 2) : 0d;
 
         #endregion
     }
