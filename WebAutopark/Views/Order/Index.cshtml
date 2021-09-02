@@ -7,34 +7,44 @@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderDetails)
-        </th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.ModelName)
+            </th>
+            <th>
+
+                @Html.DisplayNameFor(model => model.Vehicle.TankCapacity)
+            </th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) 
-    {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VehicleId)
+                @Html.DisplayFor(model => item.OrderId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderDetails)
+                @Html.DisplayFor(modelItem => item.Vehicle.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle.TankCapacity)
             </td>
             <td class="text-center">
-                @Html.ActionLink("View", "OrderInfo", new { id = item.OrderId }) |
+                @Html.ActionLink("View", "OrderInfo", new { id = item.OrderId })
             </td>
         </tr>
-    }
+        }
     </tbody>
 </table>
 
-<div class="text-center mt-3">
-    <a class="btn btn-primary" asp-action="OrderInfo">Create new</a>
+<div class="text-center">
+    @Html.ActionLink("Add order", "OrderDetailCreate", "OrderDetail", Model, new {@class = "btn btn-primary"})
 </div>

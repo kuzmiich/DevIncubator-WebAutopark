@@ -8,7 +8,7 @@ namespace WebAutopark.Core.Enums
 {
     public enum VehicleSortCriteria
     {
-        Id,
+        Id = 1,
         Name,
         Type,
         Mileage,

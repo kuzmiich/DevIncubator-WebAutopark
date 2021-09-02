@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebAutopark.BusinessLogic.Models;
 using WebAutopark.Core.Enums;
@@ -16,18 +17,19 @@ namespace WebAutopark.Controllers
             _vehicleRepository = vehicleRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(VehicleSortCriteria criteria = VehicleSortCriteria.Id, bool isAscending = true)
+        public async Task<IActionResult> Index(VehicleSortCriteria? criteria, bool? isAscending)
         {
-            var vehicles = await _vehicleRepository.GetAll(criteria, isAscending);
+            IEnumerable<VehicleViewModel> vehicles = null;
+            if (!criteria.HasValue)
+            {
+                vehicles = await _vehicleRepository.GetAll();
+                return View(vehicles);
+            }
+
+            isAscending ??= false;
+
+            vehicles = await _vehicleRepository.GetAll(criteria.Value, isAscending.Value);
             
-            return View(vehicles);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var vehicles = await _vehicleRepository.GetAll();
-
             return View(vehicles);
         }
         [HttpGet]

@@ -17,10 +17,8 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> OrderDetailCreate()
+        public async Task<IActionResult> OrderDetailCreate(OrderViewModel order)
         {
-            var details = await _orderDetailRepository.GetAll();
-
             return View();
         }
 

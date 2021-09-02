@@ -12,30 +12,26 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class OrderRepository : ConnectionRepository, IOrderRepository
     {
-        private const string QueryGetAll = "SELECT Orders.*,V.ModelName,V.RegistrationNumber,OrderDetails.DetailAmount,Details.Name" +
-                                           "FROM Orders" +
-                                           "LEFT JOIN OrderDetails AS OD" +
-                                           "ON Order.OrderId = OrderDetails.OrderId" +
-                                           "JOIN Vehicles AS V" +
-                                           "ON Orders.VehicleId = V.VehicleId" +
-                                           "LEFT JOIN Details AS D" +
-                                           "ON OrderDetails.DetailId = Details.DetailId " +
-                                           "ORDER BY OrderId";
+        private const string QueryGetAll = "SELECT "
+                                           + "O.*, V.VehicleId AS VId, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, V.Weight, V.ManufactureYear, "
+                                           + "V.Mileage, V.Color, V.EngineConsumption, V.TankCapacity "
+                                           + "FROM Orders AS O "
+                                           + "LEFT JOIN Vehicles AS V ON O.VehicleId = V.VehicleId ";
 
-        private const string QueryGetById = "SELECT * FROM Orders, V.VehicleId, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, " +
-                                            "V.Weight, V.ManufactureYear, V.Mileage, V.ColorType, V.EngineType, " +
-                                            "V.EngineCapacity, V.EngineConsumption, V.EnergyTankCapacity, " + 
-                                            "OrderDetails.OrderElementId, OrderDetails.OrderId, OrderDetails.DetailId, OrderDetails.DetailAmount, " + 
-                                            "Detail.DetailId, Detail.Name " + 
-                                            "FROM Orders" +
-                                            "LEFT JOIN OrderDetails AS OD ON Orders.OrderId = OrderDetails.OrderId " +
+        private const string QueryGetById = "SELECT O.*, V.VehicleId, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, " +
+                                            "V.Weight, V.ManufactureYear, V.Mileage, V.Color, V.EngineConsumption, V.TankCapacity, " +
+                                            "OD.OrderDetailId, OD.OrderId, OD.DetailId, OD.DetailAmount, " + 
+                                            "D.DetailId, D.Name " +
+                                            "FROM Orders AS O " +
+                                            "LEFT JOIN OrderDetails AS OD ON O.OrderId = OD.OrderId " +
                                             "JOIN Vehicles AS V ON Orders.VehicleId = V.VehicleId " + 
                                             "LEFT JOIN Details AS D ON OrderDetails.DetailId = OrderDetails.DetailId " + 
                                             "WHERE Orders.OrderId = @id";
 
         private const string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
 
-        private const string QueryCreateInsert = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
+        private const string QueryCreateInsert = "INSERT Orders (VehicleId) OUTPUT Inserted.OrderId, " +
+                                                 "Inserted.VehicleId VALUES(@id)";
 
         private const string QueryUpdate = "UPDATE Orders SET VehicleId = @VehicleId WHERE OrderId = @id";
 
@@ -48,36 +44,37 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task<IEnumerable<OrderViewModel>> GetAll()
         {
-            return await DbConnection.QueryAsync<OrderViewModel, VehicleViewModel, OrderDetailViewModel, DetailViewModel, OrderViewModel>
-            (QueryGetAll, (order, vehicle, orderElement, detail) =>
+            return await DbConnection.QueryAsync<OrderViewModel, VehicleViewModel, OrderViewModel>
+            (QueryGetAll, (order, vehicle) =>
                 {
                     order.Vehicle = vehicle;
-                    orderElement.Detail = detail;
-
                     return order;
                 },
-                splitOn: "VehicleId,OrderDetailId,DetailId"
+                splitOn: "VId"
             );
         }
 
         public async Task<OrderViewModel> Get(int id)
         {
+            var orderDetails = new List<OrderDetailViewModel>();
+
             var collection = await DbConnection.QueryAsync<OrderViewModel, VehicleViewModel, OrderDetailViewModel, DetailViewModel, OrderViewModel>
             (QueryGetById, (order, vehicle, orderDetail, detail) =>
                 {
                     order.Vehicle = vehicle;
                     orderDetail.Detail = detail;
-
+                    orderDetails.Add(orderDetail);
                     return order;
                 },
-                splitOn: "VehicleId,OrderDetailId,DetailId",
+                splitOn: "VId, ODId, DId",
                 param: new { id }
             );
-
-            return collection.First();
+            var order = collection.First();
+            order.OrderDetails = orderDetails;
+            return order;
         }
 
-        public async Task<OrderViewModel> CreateInsert(OrderViewModel element) => await DbConnection.QuerySingleAsync<OrderViewModel>(QueryCreateInsert, element);
+        public async Task<OrderViewModel> CreateInsert(int id) => await DbConnection.QuerySingleAsync<OrderViewModel>(QueryCreateInsert, new { id });
 
         public async Task Create(OrderViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
 

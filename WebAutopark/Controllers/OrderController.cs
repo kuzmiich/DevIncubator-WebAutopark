@@ -32,9 +32,9 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> OrderCreate(OrderViewModel order)
+        public async Task<IActionResult> OrderCreate(int id)
         {
-            var insertOrder = await _orderRepository.CreateInsert(order);
+            var insertOrder = await _orderRepository.CreateInsert(id);
 
             return RedirectToAction("OrderDetailCreate", "OrderDetail", insertOrder);
         }

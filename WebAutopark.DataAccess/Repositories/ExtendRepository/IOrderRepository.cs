@@ -11,6 +11,6 @@ namespace WebAutopark.DataAccess.Repositories.ExtendRepository
 {
     public interface IOrderRepository : IRepository<OrderViewModel>
     {
-        Task<OrderViewModel> CreateInsert(OrderViewModel element);
+        Task<OrderViewModel> CreateInsert(int id);
     }
 }
