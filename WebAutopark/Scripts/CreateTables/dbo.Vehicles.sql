@@ -7,6 +7,7 @@
     [Weight]             INT           NOT NULL,
     [Mileage]            INT           NOT NULL,
     [Color]              INT           NOT NULL,
+    [TankCapacity]       FLOAT (53)    NOT NULL,
     [EngineConsumption]  FLOAT (53)    NOT NULL,
     [TankCapacity]       FLOAT (53)    NOT NULL,
     CONSTRAINT [PK_Vehicles] PRIMARY KEY CLUSTERED ([VehicleId] ASC),

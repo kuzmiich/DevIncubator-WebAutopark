@@ -18,6 +18,7 @@ namespace WebAutopark.Controllers
             _vehicleTypeRepository = vehicleTypeRepository;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
