@@ -10,16 +10,40 @@
     </div>
     <div class="card-body">
         <div class="form-group">
-            <label asp-for="VehicleId" class="control-label ml-md-1"></label>
-            <input asp-for="VehicleId" class="form-control" readonly />
-        </div>
-        <div class="form-group">
             <label asp-for="OrderId" class="control-label ml-md-1"></label>
             <input asp-for="OrderId" class="form-control" readonly />
         </div>
+        <div class="form-group">
+            <label asp-for="Vehicle.ModelName" class="control-label ml-md-1"></label>
+            <input asp-for="Vehicle.ModelName" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="Vehicle.RegistrationNumber" class="control-label ml-md-1"></label>
+            <input asp-for="Vehicle.RegistrationNumber" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="Vehicle.Mileage" class="control-label ml-md-1"></label>
+            <input asp-for="Vehicle.Mileage" class="form-control" readonly />
+        </div>
+        
+        <div class="form-group">Detail Info</div>
+        @{
+            foreach (var orderDetail in Model.OrderDetails)
+            {
+                <div class="form-group">
+                    <label asp-for="@orderDetail.Detail.Name" class="control-label ml-md-1"></label>
+                    <input asp-for="@orderDetail.Detail.Name" class="form-control" readonly/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@orderDetail.DetailAmount" class="control-label ml-md-1"></label>
+                    <input asp-for="@orderDetail.DetailAmount" class="form-control" readonly/>
+                </div>
+            }
+        }
     </div>
 </div>
 
 <div class="text-center mt-3">
+    <a class="btn btn-outline-primary mr-2" asp-action="OrderDetailCreate" asp-controller="OrderDetail">Add order</a>
     <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
 </div>

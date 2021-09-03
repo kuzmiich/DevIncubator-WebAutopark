@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAutopark.BusinessLogic.Models;
+using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.Controllers
@@ -9,11 +11,13 @@ namespace WebAutopark.Controllers
     public class OrderDetailController : Controller
     {
 
-        private readonly IRepository<OrderDetailViewModel> _orderDetailRepository;
+        private readonly IRepository<OrderDetail> _orderDetailRepository;
+        private readonly IMapper _mapper;
 
-        public OrderDetailController(IRepository<OrderDetailViewModel> orderDetailRepository)
+        public OrderDetailController(IRepository<OrderDetail> orderDetailRepository, IMapper mapper)
         {
             _orderDetailRepository = orderDetailRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -28,7 +32,7 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _orderDetailRepository.Create(orderDetail);
+                await _orderDetailRepository.Create(_mapper.Map<OrderDetail>(orderDetail));
 
                 return RedirectToAction("OrderInfo", "Order", new { id = orderDetail.OrderId });
             }

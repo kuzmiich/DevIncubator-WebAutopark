@@ -5,46 +5,41 @@
 }
 <h1 class="text-center">Order page</h1>
 
-<table class="table">
-    <thead>
+<table class="table text-center">
+    <thead class="thead-light">
         <tr>
-            <th>
+            <th width="5%">
                 @Html.DisplayNameFor(model => model.OrderId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicle.ModelName)
             </th>
             <th>
 
-                @Html.DisplayNameFor(model => model.Vehicle.TankCapacity)
+                @Html.DisplayNameFor(model => model.Vehicle.RegistrationNumber)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDetails)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
         <tr>
-            <td>
+            <td width="5%">
                 @Html.DisplayFor(model => item.OrderId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vehicle.ModelName)
+                @Html.DisplayFor(model => item.Vehicle.ModelName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vehicle.TankCapacity)
+                @Html.DisplayFor(model => item.Vehicle.RegistrationNumber)
             </td>
-            <td class="text-center">
+            <td>
                 @Html.ActionLink("View", "OrderInfo", new { id = item.OrderId })
             </td>
         </tr>
         }
     </tbody>
 </table>
-
-<div class="text-center">
-    @Html.ActionLink("Add order", "OrderDetailCreate", "OrderDetail", Model, new {@class = "btn btn-primary"})
-</div>

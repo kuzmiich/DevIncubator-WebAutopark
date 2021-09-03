@@ -9,7 +9,7 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
 {
-    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetailViewModel>
+    public class OrderDetailRepository : ConnectionRepository, IRepository<OrderDetail>
     {
         private const string QueryGetAll = "SELECT OrderDetails.*, Details.* "
                                            + "FROM OrderDetails INNER JOIN Details "
@@ -30,8 +30,8 @@ namespace WebAutopark.DataAccess.Repositories
         {
         }
 
-        public async Task<IEnumerable<OrderDetailViewModel>> GetAll() =>
-            await DbConnection.QueryAsync<OrderDetailViewModel, DetailViewModel, OrderDetailViewModel>
+        public async Task<IEnumerable<OrderDetail>> GetAll() =>
+            await DbConnection.QueryAsync<OrderDetail, Detail, OrderDetail>
             (
                 QueryGetAll, (orderElement, detail) =>
                 {
@@ -41,9 +41,9 @@ namespace WebAutopark.DataAccess.Repositories
                 splitOn: "OrderDetailId"
             );
 
-        public async Task<OrderDetailViewModel> Get(int id)
+        public async Task<OrderDetail> Get(int id)
         {
-            var collection = await DbConnection.QueryAsync<OrderDetailViewModel, DetailViewModel, OrderDetailViewModel>
+            var collection = await DbConnection.QueryAsync<OrderDetail, Detail, OrderDetail>
             (
                 QueryGetById, (orderElement, detail) =>
                 {
@@ -56,9 +56,9 @@ namespace WebAutopark.DataAccess.Repositories
 
             return collection.First();
         }
-        public async Task Create(OrderDetailViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
+        public async Task Create(OrderDetail element) => await DbConnection.ExecuteAsync(QueryCreate, element);
 
-        public async Task Update(OrderDetailViewModel element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
+        public async Task Update(OrderDetail element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }

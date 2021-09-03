@@ -18,15 +18,15 @@ namespace WebAutopark.DataAccess.Repositories
                                            + "FROM Orders AS O "
                                            + "LEFT JOIN Vehicles AS V ON O.VehicleId = V.VehicleId ";
 
-        private const string QueryGetById = "SELECT O.*, V.VehicleId, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, " +
+        private const string QueryGetById = "SELECT O.*, V.VehicleId AS VId, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, " +
                                             "V.Weight, V.ManufactureYear, V.Mileage, V.Color, V.EngineConsumption, V.TankCapacity, " +
-                                            "OD.OrderDetailId, OD.OrderId, OD.DetailId, OD.DetailAmount, " + 
-                                            "D.DetailId, D.Name " +
+                                            "OD.OrderDetailId AS ODId, OD.OrderId, OD.DetailId, OD.DetailAmount, " + 
+                                            "D.DetailId AS DId, D.Name " +
                                             "FROM Orders AS O " +
                                             "LEFT JOIN OrderDetails AS OD ON O.OrderId = OD.OrderId " +
-                                            "JOIN Vehicles AS V ON Orders.VehicleId = V.VehicleId " + 
-                                            "LEFT JOIN Details AS D ON OrderDetails.DetailId = OrderDetails.DetailId " + 
-                                            "WHERE Orders.OrderId = @id";
+                                            "JOIN Vehicles AS V ON O.VehicleId = V.VehicleId " + 
+                                            "LEFT JOIN Details AS D ON OD.DetailId = D.DetailId " +
+                                            "WHERE O.OrderId = @Id";
 
         private const string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
 
@@ -42,9 +42,9 @@ namespace WebAutopark.DataAccess.Repositories
         {
         }
 
-        public async Task<IEnumerable<OrderViewModel>> GetAll()
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            return await DbConnection.QueryAsync<OrderViewModel, VehicleViewModel, OrderViewModel>
+            return await DbConnection.QueryAsync<Order, Vehicle, Order>
             (QueryGetAll, (order, vehicle) =>
                 {
                     order.Vehicle = vehicle;
@@ -54,17 +54,17 @@ namespace WebAutopark.DataAccess.Repositories
             );
         }
 
-        public async Task<OrderViewModel> Get(int id)
+        public async Task<Order> Get(int id)
         {
-            var orderDetails = new List<OrderDetailViewModel>();
+            var orderDetails = new List<OrderDetail>();
 
-            var collection = await DbConnection.QueryAsync<OrderViewModel, VehicleViewModel, OrderDetailViewModel, DetailViewModel, OrderViewModel>
-            (QueryGetById, (order, vehicle, orderDetail, detail) =>
+            var collection = await DbConnection.QueryAsync<Order, Vehicle, OrderDetail, Detail, Order>
+            (QueryGetById, (order1, vehicle, orderDetail, detail) =>
                 {
-                    order.Vehicle = vehicle;
+                    order1.Vehicle = vehicle;
                     orderDetail.Detail = detail;
                     orderDetails.Add(orderDetail);
-                    return order;
+                    return order1;
                 },
                 splitOn: "VId, ODId, DId",
                 param: new { id }
@@ -74,11 +74,11 @@ namespace WebAutopark.DataAccess.Repositories
             return order;
         }
 
-        public async Task<OrderViewModel> CreateInsert(int id) => await DbConnection.QuerySingleAsync<OrderViewModel>(QueryCreateInsert, new { id });
+        public async Task<Order> CreateInsert(int id) => await DbConnection.QuerySingleAsync<Order>(QueryCreateInsert, new { id });
 
-        public async Task Create(OrderViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
+        public async Task Create(Order element) => await DbConnection.ExecuteAsync(QueryCreate, element);
 
-        public async Task Update(OrderViewModel element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
+        public async Task Update(Order element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }

@@ -54,12 +54,12 @@ namespace WebAutopark.DataAccess.Repositories
                 _ => "V.VehicleId",
             };
 
-        public async Task<IEnumerable<VehicleViewModel>> GetAll(VehicleSortCriteria sortCriteria, bool isAscending = true)
+        public async Task<IEnumerable<Vehicle>> GetAll(VehicleSortCriteria sortCriteria, bool isAscending = true)
         {
             var getAllSorted = isAscending ? $"{QueryGetAll} ORDER BY {GetVehicleSortString(sortCriteria)} ASC" : 
                 $"{QueryGetAll} ORDER BY {GetVehicleSortString(sortCriteria)} DESC";
 
-            return await DbConnection.QueryAsync<VehicleViewModel, VehicleTypeViewModel, VehicleViewModel>(getAllSorted,
+            return await DbConnection.QueryAsync<Vehicle, VehicleType, Vehicle>(getAllSorted,
                 (vehicle, vehicleType) =>
                 {
                     vehicle.VehicleType = vehicleType;
@@ -68,11 +68,11 @@ namespace WebAutopark.DataAccess.Repositories
                 splitOn: "VTId");
         }
 
-        public async Task<IEnumerable<VehicleViewModel>> GetAll() => await GetAll(VehicleSortCriteria.Id);
+        public async Task<IEnumerable<Vehicle>> GetAll() => await GetAll(VehicleSortCriteria.Id);
 
-        public async Task<VehicleViewModel> Get(int id)
+        public async Task<Vehicle> Get(int id)
         {
-            var collection = await DbConnection.QueryAsync<VehicleViewModel, VehicleTypeViewModel, VehicleViewModel>(QueryGetById,
+            var collection = await DbConnection.QueryAsync<Vehicle, VehicleType, Vehicle>(QueryGetById,
                 (vehicle, vehicleType) =>
                 {
                     vehicle.VehicleType = vehicleType;
@@ -86,9 +86,9 @@ namespace WebAutopark.DataAccess.Repositories
         }
             
 
-        public async Task Create(VehicleViewModel element) => await DbConnection.ExecuteAsync(QueryCreate, element);
+        public async Task Create(Vehicle element) => await DbConnection.ExecuteAsync(QueryCreate, element);
 
-        public async Task Update(VehicleViewModel element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
+        public async Task Update(Vehicle element) => await DbConnection.ExecuteAsync(QueryUpdate, element);
 
         public async Task Delete(int id) => await DbConnection.ExecuteAsync(QueryDelete, new { id });
     }

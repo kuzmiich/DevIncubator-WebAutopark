@@ -1,10 +1,12 @@
+using System;
+using System.Data.Common;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Data.Common;
 using WebAutopark.Extensions;
 
 namespace WebAutopark
@@ -26,6 +28,8 @@ namespace WebAutopark
             services.AddScoped<DbConnection>(_ => new SqlConnection(connectionString));
 
             services.AddEntityRepositories();
+
+            services.AddAutoMapperIntoAutopark();
 
             services.AddHttpContextAccessor();
 
