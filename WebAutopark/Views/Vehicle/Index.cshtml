@@ -1,64 +1,83 @@
-@model IEnumerable<WebAutopark.Core.Entities.Vehicle>
+@model IEnumerable<WebAutopark.BusinessLogic.Models.VehicleViewModel>
 
-@{ ViewData["Title"] = "VehicleList"; }
+    @{ ViewData["Title"] = "VehicleList"; }
 
-<h1>VehicleType page</h1>
-<table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                VehicleType
-            </th>
-            <th>
-                Model
-            </th>
-            <th>
-                Registration date
-            </th>
-            <th>
-                Weight
-            </th>
-            <th>
-                Manufacture Year
-            </th>
-            <th>
-                Mileage
-            </th>
-            <th>
-                Fuel tank
-            </th>
-            <th>
-                Color
-            </th>
-            <th>
-                Consumption
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <h1 class="text-center">Vehicle page</h1>
+
+    <form method="get">
+        <div class="form-inline form-group">
+            <label class="control-label mr-3">Sort criteria: </label>
+            <select name="criteria" class="form-control mr-2" id="criteria">
+                <option selected value="1">Id</option>
+                <option value="2">Name</option>
+                <option value="3">Type</option>
+                <option value="4">Mileage</option>
+            </select>
+            <label class="control-label mr-1">Is ascending:</label>
+            <input type="checkbox" name="isAscending" value="true" id="isAscending" />
+
+            <input type="submit" value="filter" class="btn btn-primary ml-2" id="filter" />
+        </div>
+    </form>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModelName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleType.TypeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegistrationNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManufactureYear)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Weight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mileage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EngineConsumption)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TankCapacity)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+    {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.VehicleId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VehicleType.TypeName)
+                    @Html.DisplayFor(modelItem => item.ModelName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ModelName)
+                    @Html.DisplayFor(modelItem => item.VehicleType.TypeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RegistrationNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Weight)
+                    @Html.DisplayFor(modelItem => item.ManufactureYear)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ManufactureYear)
+                    @Html.DisplayFor(modelItem => item.Weight)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Mileage)
@@ -70,20 +89,23 @@
                     @Html.DisplayFor(modelItem => item.EngineConsumption)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KmPerFullTank)
+                    @Html.DisplayFor(modelItem => item.TankCapacity)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GetCalcTaxPerMonth)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("View", "Get", new { id=item.VehicleTypeId }) |
-                    @Html.ActionLink("Edit", "Update", new { id=item.VehicleTypeId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleTypeId })
+                <td class="text-center" style="min-width: 160px">
+                    @Html.ActionLink("View", "VehicleInfo", new { id = item.VehicleId }) |
+                    @Html.ActionLink("Edit", "VehicleUpdate", new { id = item.VehicleId }) |
+                    @Html.ActionLink("Delete", "VehicleDelete", new { id = item.VehicleId })
+                    @using (Html.BeginForm("OrderCreate", "Order", new { id = item.VehicleId }, FormMethod.Post))
+                {
+                    @Html.TextBoxFor(v => item.VehicleId, new { @readonly = "readonly", @hidden = "hidden" })
+                    <button type="submit" class="btn btn-link p-0">Create order</button>
+                }
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
-<div class="text-center">
-    <a class="btn btn-primary" asp-action="Create">Create new</a>
-</div>
+    }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <a class="btn btn-primary" asp-action="VehicleCreate">Create new</a>
+    </div>
