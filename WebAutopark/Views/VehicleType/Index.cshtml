@@ -21,25 +21,25 @@
     </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) 
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleTypeId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaxCoefficient)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("View", "VehicleTypeInfo", new {id = item.VehicleTypeId}) |
-                    @Html.ActionLink("Edit", "VehicleTypeUpdate", new {id = item.VehicleTypeId}) |
-                    @Html.ActionLink("Delete", "VehicleTypeDelete", new {id = item.VehicleTypeId})
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxCoefficient)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("View", "VehicleTypeInfo", new {id = item.VehicleTypeId}) |
+                @Html.ActionLink("Edit", "VehicleTypeUpdate", new {id = item.VehicleTypeId}) |
+                @Html.ActionLink("Delete", "VehicleTypeDelete", new {id = item.VehicleTypeId})
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 

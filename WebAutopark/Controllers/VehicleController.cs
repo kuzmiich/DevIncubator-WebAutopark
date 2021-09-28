@@ -20,6 +20,7 @@ namespace WebAutopark.Controllers
             _vehicleRepository = vehicleRepository;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index(VehicleSortCriteria? criteria, bool? isAscending)
         {
@@ -30,13 +31,15 @@ namespace WebAutopark.Controllers
                 vehicles = await _vehicleRepository.GetAll();
                 return View(_mapper.Map<IEnumerable<VehicleViewModel>>(vehicles));
             }
+
             isAscending ??= false;
             // !check nullable value
 
             vehicles = await _vehicleRepository.GetAll(criteria.Value, isAscending.Value);
-            
+
             return View(_mapper.Map<IEnumerable<VehicleViewModel>>(vehicles));
         }
+
         [HttpGet]
         public async Task<IActionResult> VehicleInfo(int id)
         {
@@ -77,6 +80,7 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<VehicleViewModel>(updateModel));
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VehicleUpdate(VehicleViewModel vehicle)
@@ -101,6 +105,7 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<VehicleViewModel>(deleteModel));
         }
+
         [HttpPost]
         public async Task<IActionResult> VehicleDelete(int id)
         {

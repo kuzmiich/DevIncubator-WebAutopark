@@ -11,56 +11,56 @@
     <div class="card-body">
         <form asp-action="VehicleUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="VehicleId" hidden="hidden" />
+            <input asp-for="VehicleId" hidden="hidden"/>
 
             <div class="form-group">
                 <label asp-for="ModelName" class="control-label ml-md-1"></label>
-                <input asp-for="ModelName" class="form-control" />
+                <input asp-for="ModelName" class="form-control"/>
                 <span asp-validation-for="ModelName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="VehicleTypeId" class="control-label ml-md-1"></label>
-                <input asp-for="VehicleTypeId" class="form-control" />
+                <input asp-for="VehicleTypeId" class="form-control"/>
                 <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RegistrationNumber" class="control-label ml-md-1"></label>
-                <input asp-for="RegistrationNumber" class="form-control" />
+                <input asp-for="RegistrationNumber" class="form-control"/>
                 <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ManufactureYear" class="control-label ml-md-1"></label>
-                <input asp-for="ManufactureYear" class="form-control" />
+                <input asp-for="ManufactureYear" class="form-control"/>
                 <span asp-validation-for="ManufactureYear" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Weight" class="control-label ml-md-1"></label>
-                <input asp-for="Weight" class="form-control" />
+                <input asp-for="Weight" class="form-control"/>
                 <span asp-validation-for="Weight" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Mileage" class="control-label ml-md-1"></label>
-                <input asp-for="Mileage" class="form-control" />
+                <input asp-for="Mileage" class="form-control"/>
                 <span asp-validation-for="Mileage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Color" class="control-label ml-md-1"></label>
-                <input asp-for="Color" class="form-control" />
+                <input asp-for="Color" class="form-control"/>
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EngineConsumption" class="control-label ml-md-1"></label>
-                <input asp-for="EngineConsumption" class="form-control" />
+                <input asp-for="EngineConsumption" class="form-control"/>
                 <span asp-validation-for="EngineConsumption" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TankCapacity" class="control-label ml-md-1"></label>
-                <input asp-for="TankCapacity" class="form-control" />
+                <input asp-for="TankCapacity" class="form-control"/>
                 <span asp-validation-for="TankCapacity" class="text-danger"></span>
             </div>
 
             <div class="form-group text-center">
-                <input type="submit" value="Save" class="btn btn-outline-success" />
+                <input type="submit" value="Save" class="btn btn-outline-success"/>
             </div>
         </form>
     </div>
@@ -71,5 +71,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

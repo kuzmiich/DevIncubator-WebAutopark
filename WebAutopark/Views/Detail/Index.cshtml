@@ -9,16 +9,16 @@
     <thead class="thead-light">
     <tr>
         <th>
-                Id
-            </th>
-            <th>
+            Id
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) 
+    @foreach (var item in Model)
     {
         <tr>
             <td>
@@ -28,9 +28,9 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td class="text-center">
-                @Html.ActionLink("View", "DetailInfo", new { id = item.DetailId }) |
-                @Html.ActionLink("Edit", "DetailUpdate", new { id = item.DetailId }) |
-                @Html.ActionLink("Delete", "DetailDelete", new { id = item.DetailId })
+                @Html.ActionLink("View", "DetailInfo", new {id = item.DetailId}) |
+                @Html.ActionLink("Edit", "DetailUpdate", new {id = item.DetailId}) |
+                @Html.ActionLink("Delete", "DetailDelete", new {id = item.DetailId})
             </td>
         </tr>
     }

@@ -22,6 +22,7 @@ namespace WebAutopark.Extensions
 
             services.AddScoped<IRepository<OrderDetail>, OrderDetailRepository>();
         }
+
         public static void AddAutoMapperIntoAutopark(this IServiceCollection services)
         {
             services.AddAutoMapper(
@@ -46,7 +47,6 @@ namespace WebAutopark.Extensions
                     cfg.CreateMap<Order, OrderViewModel>()
                         .ForMember(dest => dest.OrderId, act => act.MapFrom(src => src.OrderId))
                         .ReverseMap();
-
                 }
             );
         }

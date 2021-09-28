@@ -34,10 +34,10 @@ namespace WebAutopark.Controllers
 
             if (getModel is null)
                 return NotFound();
-            
+
             return View(_mapper.Map<VehicleTypeViewModel>(getModel));
         }
-        
+
         [HttpGet]
         public IActionResult VehicleTypeCreate()
         {
@@ -62,12 +62,13 @@ namespace WebAutopark.Controllers
         public async Task<IActionResult> VehicleTypeUpdate(int id)
         {
             var updateModel = await _vehicleTypeRepository.Get(id);
-            
+
             if (updateModel is null)
                 return NotFound();
-            
+
             return View(_mapper.Map<VehicleTypeViewModel>(updateModel));
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VehicleTypeUpdate(VehicleTypeViewModel vehicleType)
@@ -80,23 +81,24 @@ namespace WebAutopark.Controllers
 
             return View(vehicleType);
         }
-        
+
         [HttpGet]
         [ActionName("VehicleTypeDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var deleteModel = await _vehicleTypeRepository.Get(id);
-            
+
             if (deleteModel is null)
                 return NotFound();
-            
+
             return View(_mapper.Map<VehicleTypeViewModel>(deleteModel));
         }
+
         [HttpPost]
         public async Task<IActionResult> VehicleTypeDelete(int id)
         {
             await _vehicleTypeRepository.Delete(id);
-            
+
             return RedirectToAction("Index");
         }
     }

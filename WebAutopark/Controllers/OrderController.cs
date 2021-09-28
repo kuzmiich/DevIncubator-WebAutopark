@@ -27,6 +27,7 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<IEnumerable<OrderViewModel>>(orders));
         }
+
         [HttpGet]
         public async Task<IActionResult> OrderInfo(int id)
         {

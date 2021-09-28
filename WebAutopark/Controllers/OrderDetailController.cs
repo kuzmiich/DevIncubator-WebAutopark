@@ -10,7 +10,6 @@ namespace WebAutopark.Controllers
 {
     public class OrderDetailController : Controller
     {
-
         private readonly IRepository<OrderDetail> _orderDetailRepository;
         private readonly IMapper _mapper;
 
@@ -34,7 +33,7 @@ namespace WebAutopark.Controllers
             {
                 await _orderDetailRepository.Create(_mapper.Map<OrderDetail>(orderDetail));
 
-                return RedirectToAction("OrderInfo", "Order", new { id = orderDetail.OrderId });
+                return RedirectToAction("OrderInfo", "Order", new {id = orderDetail.OrderId});
             }
 
             return View();

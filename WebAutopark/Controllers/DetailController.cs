@@ -29,6 +29,7 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<IEnumerable<DetailViewModel>>(orderedEnumerable));
         }
+
         [HttpGet]
         public async Task<IActionResult> DetailInfo(int id)
         {
@@ -36,10 +37,10 @@ namespace WebAutopark.Controllers
 
             if (getModel is null)
                 return NotFound();
-            
+
             return View(_mapper.Map<DetailViewModel>(getModel));
         }
-        
+
         [HttpGet]
         public IActionResult DetailCreate()
         {
@@ -63,12 +64,13 @@ namespace WebAutopark.Controllers
         public async Task<IActionResult> DetailUpdate(int id)
         {
             var updateModel = await _detailRepository.Get(id);
-            
+
             if (updateModel is null)
                 return NotFound();
-            
+
             return View(_mapper.Map<DetailViewModel>(updateModel));
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DetailUpdate(DetailViewModel detail)
@@ -81,16 +83,16 @@ namespace WebAutopark.Controllers
 
             return View(detail);
         }
-        
+
         [HttpGet]
         [ActionName("DetailDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var deleteModel = await _detailRepository.Get(id);
-            
+
             if (deleteModel is null)
                 return NotFound();
-            
+
             return View(_mapper.Map<DetailViewModel>(deleteModel));
         }
 
@@ -98,7 +100,7 @@ namespace WebAutopark.Controllers
         public async Task<IActionResult> DetailDelete(int id)
         {
             await _detailRepository.Delete(id);
-            
+
             return RedirectToAction("Index");
         }
     }
